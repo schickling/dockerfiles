@@ -1,5 +1,7 @@
 # mailcatcher
 
+Extra small mailcatcher image (271.8 MB)
+
 ## Usage
 
 ```sh
