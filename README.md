@@ -1,7 +1,7 @@
 dockerfiles
 ===========
 
-Useful collection of docker images
+Collection of lightweight docker images
 
 ## FAQ
 
