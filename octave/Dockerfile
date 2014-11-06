@@ -9,9 +9,9 @@ RUN apt-get autoclean && apt-get clean
 RUN rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # prepare dir
-RUN mkdir -p /usr/src/app
+RUN mkdir /source
 
-VOLUME ["/usr/src/app"]
-WORKDIR /usr/src/app
+VOLUME ["/source"]
+WORKDIR /source
 
 CMD ["octave"]
