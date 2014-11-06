@@ -1,6 +1,6 @@
-# octave
+# rust
 
-Lightweight nightly rust image including cargo and gdb
+Nightly Rust build including Cargo and GDB
 
 ## Usage
 
