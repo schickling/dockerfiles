@@ -1,6 +1,6 @@
 # rust
 
-Nightly Rust build including Cargo and GDB
+Lightweight nightly Rust build including Cargo and GDB
 
 ## Usage
 
