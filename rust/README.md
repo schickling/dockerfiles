@@ -10,9 +10,15 @@ $ docker run --rm -it -v $(pwd):/source schickling/rust
 
 Mount your local source folder to the container and compile & run code inside.
 
-### Environment variables
+#### Compiling code
 
-#### `USER`
+```sh
+$ rustc hello-world.rs
+$ ./hello-world
+> Hello World!
+```
+
+#### Environment variables
 
 The `$USER` environment variable can be specified, which is used by `cargo`. The default is `root`.
 
