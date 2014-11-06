@@ -4,7 +4,7 @@ MAINTAINER Johannes Schickling "schickling.j@gmail.com"
 ENV triple x86_64-unknown-linux-gnu
 
 # install curl (needed to install rust)
-RUN apt-get update && apt-get install -y curl g++-multilib lib32stdc++6
+RUN apt-get update && apt-get install -y curl gdb g++-multilib lib32stdc++6
 
 # install rust
 RUN curl -sL https://static.rust-lang.org/dist/rust-nightly-$triple.tar.gz | tar xvz -C /tmp
