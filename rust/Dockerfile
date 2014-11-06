@@ -2,7 +2,7 @@ FROM debian:wheezy
 MAINTAINER Johannes Schickling "schickling.j@gmail.com"
 
 # install curl (needed to install rust)
-RUN apt-get update && apt-get install -y curl gdb
+RUN apt-get update && apt-get install -y curl gdb gcc make
 
 # install rust & cargo
 RUN curl -s https://static.rust-lang.org/rustup.sh | sh
