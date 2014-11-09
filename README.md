@@ -1,4 +1,4 @@
-dockerfiles
+dockerfiles [![Build Status](https://travis-ci.org/schickling/dockerfiles.svg)](https://travis-ci.org/schickling/dockerfiles)
 ===========
 
 Collection of lightweight and ready-to-use docker images
