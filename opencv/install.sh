@@ -5,7 +5,7 @@ opencv_deps=(libopencv-dev yasm libtiff4-dev libjpeg-dev libjasper-dev libavcode
 install_deps=(curl build-essential checkinstall cmake pkg-config)
 
 # install dependencies
-apt-get update && apt-get install -y $install_deps
+apt-get update && apt-get install -y ${install_deps[@]}
 
 # download opencv
 curl -sL https://github.com/Itseez/opencv/archive/$opencv_version.tar.gz | tar xvz -C /tmp
@@ -22,7 +22,7 @@ ldconfig
 ln /dev/null /dev/raw1394 # hide warning - http://stackoverflow.com/questions/12689304/ctypes-error-libdc1394-error-failed-to-initialize-libdc1394
 
 # cleanup package manager
-apt-get remove --purge -y $install_deps && apt-get autoclean && apt-get clean
+apt-get remove --purge -y ${install_deps[@]} && apt-get autoclean && apt-get clean
 rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # prepare dir
