@@ -11,5 +11,5 @@ $ docker run --rm -it -v $(pwd):/source schickling/opencv
 ### Compile
 
 ```sh
-$ gcc $(pkg-config --cflags --libs opencv) -lstdc++ my-file.cpp
+$ g++ $(pkg-config --cflags --libs opencv) my-file.cpp
 ```

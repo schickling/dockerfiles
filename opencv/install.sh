@@ -1,6 +1,6 @@
 #! /bin/bash
 
-opencv_version=2.4.10.1
+opencv_version=3.0.0-beta
 opencv_deps=(libopencv-dev yasm libtiff4-dev libjpeg-dev libjasper-dev libavcodec-dev libavformat-dev libswscale-dev libdc1394-22-dev libxine-dev libgstreamer0.10-dev libgstreamer-plugins-base0.10-dev libv4l-dev python-dev python-numpy libtbb-dev libqt4-dev libgtk2.0-dev libfaac-dev libmp3lame-dev libopencore-amrnb-dev libopencore-amrwb-dev libtheora-dev libvorbis-dev libxvidcore-dev x264 v4l-utils ffmpeg pkg-config)
 install_deps=(curl build-essential checkinstall cmake)
 
@@ -13,7 +13,7 @@ curl -sL https://github.com/Itseez/opencv/archive/$opencv_version.tar.gz | tar x
 # install
 cd /tmp/opencv-$opencv_version && mkdir build && cd build
 cmake -D CMAKE_BUILD_TYPE=RELEASE -D CMAKE_INSTALL_PREFIX=/usr/local -D WITH_TBB=ON -D WITH_V4L=ON -D INSTALL_C_EXAMPLES=ON -D BUILD_EXAMPLES=ON -D WITH_OPENGL=ON ..
-make -j2
+make
 make install
 
 # configure
