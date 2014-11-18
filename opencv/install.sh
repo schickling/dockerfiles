@@ -19,6 +19,7 @@ make install
 # configure
 echo "/usr/local/lib" > /etc/ld.so.conf.d/opencv.conf
 ldconfig
+ln /dev/null /dev/raw1394 # hide warning - http://stackoverflow.com/questions/12689304/ctypes-error-libdc1394-error-failed-to-initialize-libdc1394
 
 # cleanup package manager
 apt-get remove --purge -y $install_deps && apt-get autoclean && apt-get clean
