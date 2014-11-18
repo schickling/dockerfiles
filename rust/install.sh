@@ -1,5 +1,8 @@
 #! /bin/bash
 
+# exit if a command fails
+set -e
+
 triple=x86_64-unknown-linux-gnu
 
 # install curl (needed to install rust)

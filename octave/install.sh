@@ -1,5 +1,8 @@
 #! /bin/bash
 
+# exit if a command fails
+set -e
+
 # install octave 3.6.2
 apt-get update && apt-get install -y octave
 
