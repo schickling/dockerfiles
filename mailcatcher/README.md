@@ -1,6 +1,6 @@
 # mailcatcher
 
-Extra small mailcatcher image (271.8 MB)
+Extra small mailcatcher image (261.9 MB)
 
 ## Usage
 
