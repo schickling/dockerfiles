@@ -3,8 +3,8 @@
 # exit if a command fails
 set -e
 
-# install octave 3.6.2
-apt-get update && apt-get install -y octave
+# install octave 3.6.2 (less needed as frontend)
+apt-get update && apt-get install -y octave less
 
 # cleanup package manager
 apt-get autoclean && apt-get clean
