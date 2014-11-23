@@ -5,6 +5,7 @@ Collection of lightweight and ready-to-use docker images
 
 ## Images
 
+* **[Latex](https://github.com/schickling/dockerfiles/tree/master/latex)** - Lightwight full texlive distribution
 * **[Mailcatcher](https://github.com/schickling/dockerfiles/tree/master/mailcatcher)** - Extra small mailcatcher image
 * **[Octave](https://github.com/schickling/dockerfiles/tree/master/octave)** - Lightweight ocatve development environment
 * **[OpenCV](https://github.com/schickling/dockerfiles/tree/master/opencv)** - Lightweight ready-to use OpenCV image
