@@ -8,4 +8,4 @@ RUN chmod +x install.sh && ./install.sh && rm install.sh
 
 VOLUME ["/source"]
 WORKDIR /source
-CMD ["octave"]
+CMD ["bash"]
