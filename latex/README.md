@@ -1,6 +1,6 @@
 # latex
 
-Full texlive distribution
+Lightwight full texlive distribution
 
 ## Usage
 
