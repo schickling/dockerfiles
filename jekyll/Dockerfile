@@ -1,4 +1,4 @@
-FROM debian:jessie
+FROM debian:wheezy
 MAINTAINER Johannes Schickling "schickling.j@gmail.com"
 
 ENV DEBIAN_FRONTEND noninteractive
@@ -9,4 +9,4 @@ RUN chmod +x install.sh && ./install.sh && rm install.sh
 EXPOSE 4000
 VOLUME ["/source"]
 WORKDIR /source
-CMD ["jekyll", "serve"]
+CMD ["jekyll", "serve", "--host=0.0.0.0"]
