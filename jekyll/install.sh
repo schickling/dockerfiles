@@ -3,7 +3,7 @@
 # exit if a command fails
 set -e
 
-# install ruby 1.9.1
+# install ruby 2.1
 apt-get update && apt-get install -y ruby ruby-dev build-essential
 
 # install jekyll & bundler (therubyracer needed for coffeescript support)
