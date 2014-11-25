@@ -9,4 +9,4 @@ RUN chmod +x install.sh && ./install.sh && rm install.sh
 EXPOSE 4000
 VOLUME ["/source"]
 WORKDIR /source
-CMD ["jekyll", "serve", "--host=0.0.0.0"]
+CMD ["jekyll", "serve", "--host=0.0.0.0", "--watch"]
