@@ -1,6 +1,6 @@
 # jekyll
 
-Lightweight jekyll working environment (250MB)
+Lightweight jekyll working environment (324.5MB)
 
 ## Usage
 
