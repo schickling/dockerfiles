@@ -3,6 +3,7 @@
 # exit if a command fails
 set -e
 
+opencv_version="2.4.10.1"
 opencv_deps=(libopencv-dev yasm libtiff4-dev libjpeg-dev libjasper-dev libavcodec-dev libavformat-dev libswscale-dev libdc1394-22-dev libxine-dev libgstreamer0.10-dev libgstreamer-plugins-base0.10-dev libv4l-dev python-dev python-numpy libtbb-dev libqt4-dev libgtk2.0-dev libmp3lame-dev libopencore-amrnb-dev libopencore-amrwb-dev libtheora-dev libvorbis-dev libxvidcore-dev x264 v4l-utils ffmpeg pkg-config)
 install_deps=(curl build-essential checkinstall cmake)
 
