@@ -5,6 +5,7 @@ Collection of lightweight and ready-to-use docker images
 
 ## Images
 
+* **[Hugin](https://github.com/schickling/dockerfiles/tree/master/hugin)** - Hugin & Panorama tools
 * **[Jekyll](https://github.com/schickling/dockerfiles/tree/master/jekyll)** - Lightweight jekyll working environment
 * **[Latex](https://github.com/schickling/dockerfiles/tree/master/latex)** - Full texlive distribution
 * **[Mailcatcher](https://github.com/schickling/dockerfiles/tree/master/mailcatcher)** - Extra small mailcatcher image
