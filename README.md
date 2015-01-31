@@ -6,6 +6,7 @@ Collection of lightweight and ready-to-use docker images
 ## Images
 
 * **[Beanstalkd](https://github.com/schickling/dockerfiles/tree/master/beanstalkd)** - Lightweight image of the latest beanstalkd version
+* **[Beanstalkd-Console](https://github.com/schickling/dockerfiles/tree/master/beanstalkd-console)** - Admin console for Beanstalk queue server
 * **[Hugin](https://github.com/schickling/dockerfiles/tree/master/hugin)** - Hugin & Panorama tools
 * **[Jekyll](https://github.com/schickling/dockerfiles/tree/master/jekyll)** - Lightweight jekyll working environment
 * **[Latex](https://github.com/schickling/dockerfiles/tree/master/latex)** - Full texlive distribution
