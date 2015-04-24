@@ -17,17 +17,17 @@ if [ "${S3_BUCKET}" = "**None**" ]; then
   exit 1
 fi
 
-if [ -z "${MYSQL_HOST}" ]; then
+if [ "${MYSQL_HOST}" = "**None**" ]; then
   echo "You need to set the MYSQL_HOST environment variable."
   exit 1
 fi
 
-if [ -z "${MYSQL_USER}" ]; then
+if [ "${MYSQL_USER}" = "**None**" ]; then
   echo "You need to set the MYSQL_USER environment variable."
   exit 1
 fi
 
-if [ -z "${MYSQL_PASSWORD}" ]; then
+if [ "${MYSQL_PASSWORD}" = "**None**" ]; then
   echo "You need to set the MYSQL_PASSWORD environment variable or link to a container named MYSQL."
   exit 1
 fi
