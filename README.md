@@ -15,6 +15,7 @@ Collection of lightweight and ready-to-use docker images
 * **[NodeJS](https://github.com/schickling/dockerfiles/tree/master/nodejs)** - Minimal NodeJS + NPM image
 * **[Octave](https://github.com/schickling/dockerfiles/tree/master/octave)** - Lightweight ocatve development environment
 * **[OpenCV](https://github.com/schickling/dockerfiles/tree/master/opencv)** - Lightweight ready-to use OpenCV image
+* **[postgres-backup-s3](https://github.com/schickling/dockerfiles/tree/master/postgres-backup-s3)** - Backup PostgresSQL to S3 (supports periodic backups)
 * **[Redis-Commander](https://github.com/schickling/dockerfiles/tree/master/redis-commander)** - Redis management tool
 * **[Rust](https://github.com/schickling/dockerfiles/tree/master/rust)** - Lightweight nightly Rust build including Cargo and GDB
 * **[swagger-ui](https://github.com/schickling/dockerfiles/tree/master/swagger-ui)** - Swagger UI 2.1.2 with API_URL and API_KEY injection (45 MB)
