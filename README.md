@@ -19,6 +19,7 @@ Collection of lightweight and ready-to-use docker images
 * **[Redis-Commander](https://github.com/schickling/dockerfiles/tree/master/redis-commander)** - Redis management tool
 * **[Rust](https://github.com/schickling/dockerfiles/tree/master/rust)** - Lightweight nightly Rust build including Cargo and GDB
 * **[swagger-ui](https://github.com/schickling/dockerfiles/tree/master/swagger-ui)** - Swagger UI 2.1.2 with API_URL and API_KEY injection (45 MB)
+* **[s3cmd](https://github.com/schickling/dockerfiles/tree/master/s3cmd)** - Lightweight wrapper around s3cmd
 
 ## FAQ
 
