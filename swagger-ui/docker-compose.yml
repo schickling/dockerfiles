@@ -1,0 +1,13 @@
+swaggerui:
+  build: .
+  ports:
+    - 80:80
+  hostname: swaggerui
+  volumes:
+    - ./petstore-swagger.json:/app/swagger.json
+
+swaggerui_novolume:
+  build: .
+  ports:
+    - 8080:80
+  hostname: swaggerui
