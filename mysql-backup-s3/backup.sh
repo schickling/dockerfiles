@@ -45,6 +45,6 @@ mysqldump $MYSQL_HOST_OPTS $MYSQLDUMP_OPTIONS $MYSQLDUMP_DATABASE | gzip > dump.
 
 echo "Uploading dump to $S3_BUCKET"
 
-cat dump.sql.gz | aws s3 cp - s3://$S3_BUCKET/$S3_PREFIX/$(date +"%Y-%m-%dT%H:%M:%SZ").sql.gz || exit 2
+cat dump.sql.gz | aws s3 cp - s3://$S3_BUCKET/$S3_PREFIX/$(date +"%Y-%m-%dT%H%M%SZ").sql.gz || exit 2
 
 echo "SQL backup uploaded successfully"
