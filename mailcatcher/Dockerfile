@@ -1,4 +1,4 @@
-FROM debian:wheezy
+FROM ruby:2.2 
 MAINTAINER Johannes Schickling "schickling.j@gmail.com"
 
 ADD install.sh install.sh
