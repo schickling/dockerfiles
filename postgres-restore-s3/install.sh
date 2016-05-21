@@ -6,7 +6,7 @@ set -e
 apk update
 
 # install pg_dump
-apk add 'postgresql>9.5.0'
+apk add postgresql
 
 # install s3 tools
 apk add python py-pip
