@@ -54,26 +54,16 @@ copy_s3 () {
 
   rm $SRC_FILE
 }
-
-if [ "${MYSQLDUMP_DATABASES}" == "*ALL_IN_ONE*" ]; then
-  echo "Creating dump of all databases from ${MYSQL_HOST}..."
-
-  DUMP_FILE="/tmp/dump.sql.gz"
-  mysqldump $MYSQL_HOST_OPTS $MYSQLDUMP_OPTIONS --all-databases | gzip > $DUMP_FILE
-
-  if [ $? == 0 ]; then
-    S3_FILE="${DUMP_START_TIME}.${DB}.sql.gz"
-
-    copy_s3 $DUMP_FILE $S3_FILE
+# Multi file: yes
+if [ ! -z "$(echo $MULTI_FILES | grep -i -E "(yes|true|1)")" ]; then
+  if [ "${MYSQLDUMP_DATABASE}" == "--all-databases" ]; then
+    DATABASES=`mysql $MYSQL_HOST_OPTS -e "SHOW DATABASES;" | grep -Ev "(Database|information_schema|performance_schema|mysql)"`
   else
-    >&2 echo "Error creating dump of all databases"
+    DATABASES=$MYSQLDUMP_DATABASE
   fi
-elif [ "${MYSQLDUMP_DATABASES}" == "*ALL*" ]; then
-  echo "Mysql options ${MYSQL_HOST_OPTS}";
-  DATABASES=`mysql $MYSQL_HOST_OPTS -e "SHOW DATABASES;" | grep -Ev "(Database|information_schema|performance_schema|mysql)"`
 
   for DB in $DATABASES; do
-    echo "Creating dump of ${DB} database from ${MYSQL_HOST}..."
+    echo "Creating individual dump of ${DB} from ${MYSQL_HOST}..."
 
     DUMP_FILE="/tmp/${DB}.sql.gz"
 
@@ -87,23 +77,20 @@ elif [ "${MYSQLDUMP_DATABASES}" == "*ALL*" ]; then
       >&2 echo "Error creating dump of ${DB}"
     fi
   done
-
+# Multi file: no
 else
-  for DB in $MYSQLDUMP_DATABASES; do
-    echo "Creating dump of ${DB} database from ${MYSQL_HOST}..."
+  echo "Creating dump for ${MYSQLDUMP_DATABASE} from ${MYSQL_HOST}..."
 
-    DUMP_FILE="/tmp/${DB}.sql.gz"
+  DUMP_FILE="/tmp/dump.sql.gz"
+  mysqldump $MYSQL_HOST_OPTS $MYSQLDUMP_OPTIONS $MYSQLDUMP_DATABASE | gzip > $DUMP_FILE
 
-    mysqldump $MYSQL_HOST_OPTS $MYSQLDUMP_OPTIONS --databases $DB | gzip > $DUMP_FILE
+  if [ $? == 0 ]; then
+    S3_FILE="${DUMP_START_TIME}.dump.sql.gz"
 
-    if [ $? == 0 ]; then
-      S3_FILE="${DUMP_START_TIME}.${DB}.sql.gz"
-
-      copy_s3 $DUMP_FILE $S3_FILE
-    else
-      >&2 echo "Error creating dump of database ${DB}"
-    fi
-  done
+    copy_s3 $DUMP_FILE $S3_FILE
+  else
+    >&2 echo "Error creating dump of all databases"
+  fi
 fi
 
 echo "SQL backup finished"
