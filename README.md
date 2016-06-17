@@ -12,6 +12,7 @@ Collection of lightweight and ready-to-use docker images
 * **[Latex](https://github.com/schickling/dockerfiles/tree/master/latex)** - Full texlive distribution
 * **[Mailcatcher](https://github.com/schickling/dockerfiles/tree/master/mailcatcher)** - Extra small mailcatcher image
 * **[mysql-backup-s3](https://github.com/schickling/dockerfiles/tree/master/mysql-backup-s3)** - Backup MySQL to S3 (supports periodic backups)
+* **[nginx-envtpl](https://github.com/schickling/dockerfiles/tree/master/nginx-envtpl)** - Nginx image with support for enviornment variables using [envtpl](https://github.com/andreasjansson/envtpl)
 * **[NodeJS](https://github.com/schickling/dockerfiles/tree/master/nodejs)** - Minimal NodeJS + NPM image
 * **[Octave](https://github.com/schickling/dockerfiles/tree/master/octave)** - Lightweight ocatve development environment
 * **[OpenCV](https://github.com/schickling/dockerfiles/tree/master/opencv)** - Lightweight ready-to use OpenCV image
