@@ -1,6 +1,6 @@
 # nginx-envtpl
 
-Nginx image with support for enviornment variables using [envtpl](https://github.com/andreasjansson/envtpl)
+Nginx image with support for environment variables using [envtpl](https://github.com/andreasjansson/envtpl)
 
 ## Usage
 
