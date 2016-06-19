@@ -67,7 +67,7 @@ proxy:
     NGINX_WORKER_CONNECTIONS: 10000
     NGINX_BACKLOG: 10000
     NGINX_PROXY_ADDR: "http://example.com/"
-    NGINX_CONFIG_TEMPLATE: >
+    NGINX_CONFIG_TEMPLATE: |
       worker_processes auto;
       worker_rlimit_nofile {{ NGINX_WORKER_RLIMIT_NOFILE }};
       error_log /dev/stdout info;
