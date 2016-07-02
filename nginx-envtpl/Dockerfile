@@ -1,7 +1,15 @@
-FROM nginx:1.9
+FROM debian:sid
+
 MAINTAINER Johannes Schickling "schickling.j@gmail.com"
 
-RUN apt-get update && apt-get install -y python-pip
+RUN apt-get update \
+	&& apt-get install --no-install-recommends --no-install-suggests -y \
+						ca-certificates \
+						nginx-extras \
+            python-pip \
+            python-setuptools \
+	&& rm -rf /var/lib/apt/lists/*
+
 RUN pip install envtpl
 
 COPY entrypoint.sh /
