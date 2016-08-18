@@ -16,4 +16,4 @@ else
   sed -i "s|http://example.com/api|$API_URL|g" index.html
 fi
 
-http-server -p 80
+exec http-server -p 80
