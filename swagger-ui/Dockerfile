@@ -6,6 +6,7 @@ ENV FOLDER "swagger-ui-2.2.0"
 ENV API_URL "http://petstore.swagger.io/v2/swagger.json"
 ENV API_KEY "**None**"
 ENV SWAGGER_JSON "/app/swagger.json"
+ENV PORT 80
 
 WORKDIR /app
 
