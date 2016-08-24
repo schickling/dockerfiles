@@ -12,3 +12,4 @@ $ docker run -d -p 80:80 -e API_URL=http://localhost:4000/swagger schickling/swa
 
 * `API_URL` - Swagger endpoint for your API
 * `API_KEY` - Default API Key (optional)
+* `PORT`    - Default port to run on (optional)
