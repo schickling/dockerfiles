@@ -4,6 +4,7 @@ MAINTAINER Johannes Schickling "schickling.j@gmail.com"
 
 RUN apt-get update \
 	&& apt-get install --no-install-recommends --no-install-suggests -y \
+            openssl \
 						ca-certificates \
 						nginx-extras \
             python-pip \

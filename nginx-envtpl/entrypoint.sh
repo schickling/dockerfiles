@@ -8,4 +8,9 @@ else
   envtpl /etc/nginx/nginx.conf.tpl
 fi
 
+if [[ ! -z $NGINX_AUTH_BASIC_USER && ! -z $NGINX_AUTH_BASIC_PASSWORD ]]; then
+  echo -n "$NGINX_AUTH_BASIC_USER:" > /etc/nginx/.htpasswd
+  openssl passwd -apr1 $NGINX_AUTH_BASIC_PASSWORD >> /etc/nginx/.htpasswd
+fi
+
 exec "$@"
