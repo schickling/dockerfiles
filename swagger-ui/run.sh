@@ -16,4 +16,9 @@ else
   sed -i "s|http://example.com/api|$API_URL|g" index.html
 fi
 
+if [[ -n "$VALIDATOR_URL" ]]; then
+  sed -i "s|.*validatorUrl:.*$||g" index.html
+  sed -i "s|\(url: url,.*\)|\1\n        validatorUrl: \"${VALIDATOR_URL}\",|g" index.html
+fi
+
 exec http-server -p $PORT $*
