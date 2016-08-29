@@ -17,7 +17,8 @@ else
 fi
 
 if [[ -n "$VALIDATOR_URL" ]]; then
-  sed -i "s|url: url,.*|url: url, validatorUrl: \"${VALIDATOR_URL}\",|g" index.html
+  sed -i "s|.*validatorUrl:.*$||g" index.html
+  sed -i "s|\(url: url,.*\)|\1\n        validatorUrl: \"${VALIDATOR_URL}\",|g" index.html
 fi
 
 exec http-server -p $PORT $*
