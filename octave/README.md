@@ -1,6 +1,6 @@
 # octave
 
-Lightweight ocatve development environment
+Lightweight octave development environment
 
 ## Usage
 
