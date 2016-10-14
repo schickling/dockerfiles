@@ -31,6 +31,7 @@ pgbackups3:
     POSTGRES_DATABASE: dbname
     POSTGRES_USER: user
     POSTGRES_PASSWORD: password
+    POSTGRES_EXTRA_OPTS: '--schema=public --blobs'
 ```
 
 ### Automatic Periodic Backups
