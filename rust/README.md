@@ -26,3 +26,19 @@ The `$USER` environment variable can be specified, which is used by `cargo`. The
 $ docker run --rm -it -e USER="John Doe" -v $(pwd):/source schickling/rust
 ```
 
+#### Running cargo as local user
+
+In order to run cargo as a local user and not as root run this:
+
+```sh
+$ docker run --rm -it \
+  -u $UID \
+  -e USER=$USER \
+  -e CARGO_HOME=/source/.cargo \
+  -v $HOME/.cargo:/source/.cargo \
+  -v $(pwd):/source \
+  schickling/rust \
+  cargo build
+```
+
+Note the new volume for the cargo cache and the `-u` flag.
