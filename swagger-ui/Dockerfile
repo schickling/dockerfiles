@@ -1,4 +1,4 @@
-FROM mhart/alpine-node
+FROM node:alpine
 MAINTAINER Johannes Schickling "schickling.j@gmail.com"
 
 ENV VERSION "v2.2.6"
@@ -15,7 +15,7 @@ ENV PORT 80
 
 WORKDIR /app
 
-RUN apk update && apk add openssl
+RUN apk add --no-cache openssl
 RUN wget -qO- https://github.com/swagger-api/swagger-ui/archive/$VERSION.tar.gz | tar xvz
 RUN cp -r $FOLDER/dist/* . && rm -rf $FOLDER
 RUN npm install -g http-server
