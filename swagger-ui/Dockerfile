@@ -1,8 +1,8 @@
 FROM mhart/alpine-node
 MAINTAINER Johannes Schickling "schickling.j@gmail.com"
 
-ENV VERSION "v2.2.6"
-ENV FOLDER "swagger-ui-2.2.6"
+ENV VERSION "v2.2.8"
+ENV FOLDER "swagger-ui-2.2.8"
 ENV API_URL "http://petstore.swagger.io/v2/swagger.json"
 ENV API_KEY "**None**"
 ENV OAUTH_CLIENT_ID "**None**"

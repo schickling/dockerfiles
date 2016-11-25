@@ -1,6 +1,6 @@
 # swagger-ui
 
-Swagger UI 2.2.6 with API_URL, API_KEY and OAUTH2 injection (45 MB)
+Swagger UI 2.2.8 with API_URL, API_KEY and OAUTH2 injection (45 MB)
 
 ## Usage
 
