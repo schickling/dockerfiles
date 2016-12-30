@@ -44,7 +44,7 @@ copy_s3 () {
   SRC_FILE=$1
   DEST_FILE=$2
 
-  if[ "${S3_ENDPOINT}" == "**None**" ]; then
+  if [ "${S3_ENDPOINT}" == "**None**" ]; then
     AWS_ARGS=""
   else
     AWS_ARGS="--endpoint-url ${S3_ENDPOINT}"
