@@ -30,10 +30,12 @@ if [ "${MYSQL_PASSWORD}" == "**None**" ]; then
   exit 1
 fi
 
-# env vars needed for aws tools
-export AWS_ACCESS_KEY_ID=$S3_ACCESS_KEY_ID
-export AWS_SECRET_ACCESS_KEY=$S3_SECRET_ACCESS_KEY
-export AWS_DEFAULT_REGION=$S3_REGION
+if [ "${S3_IAMROLE}" != "true" ]; then
+  # env vars needed for aws tools - only if an IAM role is not used
+  export AWS_ACCESS_KEY_ID=$S3_ACCESS_KEY_ID
+  export AWS_SECRET_ACCESS_KEY=$S3_SECRET_ACCESS_KEY
+  export AWS_DEFAULT_REGION=$S3_REGION
+fi
 
 MYSQL_HOST_OPTS="-h $MYSQL_HOST -P $MYSQL_PORT -u$MYSQL_USER -p$MYSQL_PASSWORD"
 DUMP_START_TIME=$(date +"%Y-%m-%dT%H%M%SZ")
