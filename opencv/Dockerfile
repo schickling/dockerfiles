@@ -1,7 +1,7 @@
 FROM debian:jessie
 MAINTAINER Johannes Schickling "schickling.j@gmail.com"
 
-ARG OPENCV_VERISON="3.0.0"
+ARG OPENCV_VERSION="3.0.0"
 
 # install dependencies
 RUN apt-get update
@@ -9,10 +9,10 @@ RUN apt-get install -y libopencv-dev yasm libjpeg-dev libjasper-dev libavcodec-d
 RUN apt-get install -y curl build-essential checkinstall cmake
 
 # download opencv
-RUN curl -sL https://github.com/Itseez/opencv/archive/$OPENCV_VERISON.tar.gz | tar xvz -C /tmp
-RUN mkdir -p /tmp/opencv-$OPENCV_VERISON/build
+RUN curl -sL https://github.com/Itseez/opencv/archive/$OPENCV_VERSION.tar.gz | tar xvz -C /tmp
+RUN mkdir -p /tmp/opencv-$OPENCV_VERSION/build
 
-WORKDIR /tmp/opencv-$OPENCV_VERISON/build
+WORKDIR /tmp/opencv-$OPENCV_VERSION/build
 
 # install
 RUN cmake -DWITH_FFMPEG=OFF -DWITH_OPENEXR=OFF -DBUILD_TIFF=OFF -DWITH_CUDA=OFF -DWITH_NVCUVID=OFF -DBUILD_PNG=OFF ..
