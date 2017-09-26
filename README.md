@@ -14,7 +14,7 @@ Collection of lightweight and ready-to-use docker images
 * **[mysql-backup-s3](https://github.com/schickling/dockerfiles/tree/master/mysql-backup-s3)** - Backup MySQL to S3 (supports periodic backups)
 * **[nginx-envtpl](https://github.com/schickling/dockerfiles/tree/master/nginx-envtpl)** - Nginx image with support for environment variables using [envtpl](https://github.com/andreasjansson/envtpl)
 * **[NodeJS](https://github.com/schickling/dockerfiles/tree/master/nodejs)** - Minimal NodeJS + NPM image
-* **[Octave](https://github.com/schickling/dockerfiles/tree/master/octave)** - Lightweight ocatve development environment
+* **[Octave](https://github.com/schickling/dockerfiles/tree/master/octave)** - Lightweight octave development environment
 * **[OpenCV](https://github.com/schickling/dockerfiles/tree/master/opencv)** - Lightweight ready-to use OpenCV image
 * **[postgres-backup-s3](https://github.com/schickling/dockerfiles/tree/master/postgres-backup-s3)** - Backup PostgresSQL to S3 (supports periodic backups)
 * **[Redis-Commander](https://github.com/schickling/dockerfiles/tree/master/redis-commander)** - Redis management tool
