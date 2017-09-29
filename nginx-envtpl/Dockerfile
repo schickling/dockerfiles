@@ -1,6 +1,6 @@
 FROM debian:sid
 
-MAINTAINER Johannes Schickling "schickling.j@gmail.com"
+LABEL maintainer="Johannes Schickling <schickling.j@gmail.com>"
 
 RUN apt-get update \
 	&& apt-get install --no-install-recommends --no-install-suggests -y \

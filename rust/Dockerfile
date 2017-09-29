@@ -1,5 +1,5 @@
 FROM debian:wheezy
-MAINTAINER Johannes Schickling "schickling.j@gmail.com"
+LABEL maintainer="Johannes Schickling <schickling.j@gmail.com>"
 
 # needed by cargo
 ENV USER root

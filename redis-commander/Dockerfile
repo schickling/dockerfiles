@@ -1,5 +1,5 @@
 FROM debian:jessie
-MAINTAINER Johannes Schickling "schickling.j@gmail.com"
+LABEL maintainer="Johannes Schickling <schickling.j@gmail.com>"
 
 ENV DEBIAN_FRONTEND noninteractive
 
