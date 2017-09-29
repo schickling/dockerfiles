@@ -1,5 +1,5 @@
 FROM php:7-alpine
-MAINTAINER Johannes Schickling "schickling.j@gmail.com"
+LABEL maintainer="Johannes Schickling <schickling.j@gmail.com>"
 
 ADD install.sh install.sh
 RUN chmod +x install.sh

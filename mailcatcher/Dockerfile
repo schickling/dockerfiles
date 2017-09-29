@@ -1,6 +1,6 @@
 FROM ruby:2.4-alpine3.6
 
-MAINTAINER Johannes Schickling "schickling.j@gmail.com"
+LABEL maintainer="Johannes Schickling <schickling.j@gmail.com>"
 
 RUN set -xe \
     && apk add --no-cache \

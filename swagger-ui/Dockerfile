@@ -1,5 +1,5 @@
 FROM node:alpine
-MAINTAINER Johannes Schickling "schickling.j@gmail.com"
+LABEL maintainer="Johannes Schickling <schickling.j@gmail.com>"
 
 ENV VERSION "v2.2.10"
 ENV FOLDER "swagger-ui-2.2.10"
