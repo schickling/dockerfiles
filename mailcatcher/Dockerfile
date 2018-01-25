@@ -18,4 +18,4 @@ EXPOSE 1025
 # webserver port
 EXPOSE 1080
 
-CMD ["mailcatcher", "--foreground", "--ip=0.0.0.0"]
+CMD ["mailcatcher", "--no-quit", "--foreground", "--ip=0.0.0.0"]
