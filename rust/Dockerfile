@@ -5,7 +5,7 @@ LABEL maintainer="Johannes Schickling <schickling.j@gmail.com>"
 ENV USER root
 
 ADD install.sh install.sh
-RUN chmod +x install.sh && ./install.sh && rm install.sh
+RUN sh install.sh && rm install.sh
 
 VOLUME ["/source"]
 WORKDIR /source
