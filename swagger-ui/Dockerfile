@@ -15,11 +15,12 @@ ENV PORT 80
 
 WORKDIR /app
 
-RUN apk add --no-cache openssl
-RUN wget -qO- https://github.com/swagger-api/swagger-ui/archive/$VERSION.tar.gz | tar xvz
-RUN cp -r $FOLDER/dist/* . && rm -rf $FOLDER
-RUN npm install -g http-server
-RUN apk del openssl
+RUN apk add --no-cache openssl \
+  && wget -qO- https://github.com/swagger-api/swagger-ui/archive/$VERSION.tar.gz | tar xvz \
+  && cp -r $FOLDER/dist/* . \
+  && rm -rf $FOLDER \
+  && npm install -g http-server \
+  && apk del openssl
 
 ADD run.sh run.sh
 
