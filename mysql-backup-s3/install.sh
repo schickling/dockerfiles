@@ -20,6 +20,8 @@ curl -L --insecure https://github.com/odise/go-cron/releases/download/v0.0.6/go-
 chmod u+x /usr/local/bin/go-cron
 apk del curl
 
+# install coreutils for date -d
+apk add --update coreutils
 
 # cleanup
 rm -rf /var/cache/apk/*

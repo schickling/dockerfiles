@@ -60,6 +60,41 @@ copy_s3 () {
 
   rm $SRC_FILE
 }
+deleteOld_s3 () {
+  if [ "${S3_ENDPOINT}" == "**None**" ]; then
+    AWS_ARGS=""
+  else
+    AWS_ARGS="--endpoint-url ${S3_ENDPOINT}"
+  fi
+
+  aws $AWS_ARGS s3 ls s3://$S3_BUCKET/$S3_PREFIX/ | while read -r line;
+
+  do
+    createDate=`echo $line|awk {'print $1" "$2'}`
+    createDate=`date -d"$createDate" +%s`
+    olderThan=`date -d"-${DELETE_OLDER_THAN}" +%s`
+    if [[ $createDate -lt $olderThan ]]
+      then 
+        fileName=`echo $line|awk {'print $4'}`
+        echo $fileName
+        if [[ $fileName != "" ]]
+          then
+            aws $AWS_ARGS s3 rm s3://$S3_BUCKET/$S3_PREFIX/$fileName
+            echo "Deleted ${fileName} on S3"
+        fi
+    fi
+  done;
+}
+shouldDeleteOld_s3() {
+ if [ $? == 0 ]; then
+    if [ "${DELETE_OLDER_THAN}" != "**None**" ]; then
+      deleteOld_s3 
+    fi
+  else
+    >&2 echo "Error deleting s3 files older than ${DELETE_OLDER_THAN}"
+  fi 
+}
+
 # Multi file: yes
 if [ ! -z "$(echo $MULTI_FILES | grep -i -E "(yes|true|1)")" ]; then
   if [ "${MYSQLDUMP_DATABASE}" == "--all-databases" ]; then
@@ -82,6 +117,8 @@ if [ ! -z "$(echo $MULTI_FILES | grep -i -E "(yes|true|1)")" ]; then
     else
       >&2 echo "Error creating dump of ${DB}"
     fi
+
+    shouldDeleteOld_s3
   done
 # Multi file: no
 else
@@ -97,6 +134,8 @@ else
   else
     >&2 echo "Error creating dump of all databases"
   fi
+
+  shouldDeleteOld_s3
 fi
 
 echo "SQL backup finished"
