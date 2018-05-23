@@ -1,8 +1,7 @@
-FROM debian:wheezy
+FROM alpine
 LABEL maintainer="Johannes Schickling <schickling.j@gmail.com>"
 
-ADD install.sh install.sh
-RUN sh install.sh && rm install.sh
+RUN apk add --no-cache beanstalkd
 
 EXPOSE 11300
-CMD ["beanstalkd", "-p", "11300"]
+ENTRYPOINT ["/usr/bin/beanstalkd"]
