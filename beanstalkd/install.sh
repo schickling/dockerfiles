@@ -1,7 +1,7 @@
 #! /bin/bash
 
 # exit if a command fails
-set -e
+set -eo pipefail
 
 version="1.10"
 
