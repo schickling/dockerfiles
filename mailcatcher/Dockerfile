@@ -9,7 +9,7 @@ RUN set -xe \
     && apk add --no-cache --virtual .build-deps \
         build-base \
         sqlite-dev \
-    && gem install mailcatcher -v 0.6.5 --no-ri --no-rdoc \
+    && gem install mailcatcher -v 0.7.1 --no-ri --no-rdoc \
     && apk del .build-deps
 
 # smtp port
