@@ -59,6 +59,21 @@ if [ "$DIFF" != "" ]; then
     exit 1
 fi
 
+
+if [ "${S3_S3V4}" = "yes" ]; then
+    aws configure set default.s3.signature_version s3v4
+fi
+
+OUT=$(sh backup.sh)
+EXPECTED="Creating dump of user database from postgres...
+Uploading dump to flowmoco-s3-backup-test
+SQL backup uploaded successfully"
+
+if [ "$OUT" != "$EXPECTED" ]; then
+    echo "Output '$OUT' does not equal expected '$EXPECTED'"
+    exit 1
+fi
+
 # apt-get update && apt-get install -y wget
 
 # wget "https://sample-videos.com/sql/Sample-SQL-File-10rows.sql"
