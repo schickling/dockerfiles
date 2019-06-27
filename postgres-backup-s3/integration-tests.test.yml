@@ -9,8 +9,6 @@ services:
   sut:
     build:
       context: .
-      args:
-        DOCKER_API_VERSION: "1.37"
     command: 'sh integration-tests.sh'
     depends_on:
       - postgres
