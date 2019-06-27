@@ -15,11 +15,14 @@ ENV S3_SECRET_ACCESS_KEY **None**
 ENV S3_BUCKET **None**
 ENV S3_REGION us-west-1
 ENV S3_PATH 'backup'
+ENV S3_FILENAME **None**
 ENV S3_ENDPOINT **None**
 ENV S3_S3V4 no
 ENV SCHEDULE **None**
 
 ADD run.sh run.sh
 ADD backup.sh backup.sh
+ADD integration-tests.sh integration-tests.sh
+ADD config/sample_sql_file.sql sample_sql_file.sql
 
 CMD ["sh", "run.sh"]
