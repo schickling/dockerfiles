@@ -25,4 +25,6 @@ ADD backup.sh backup.sh
 ADD integration-tests.sh integration-tests.sh
 ADD config/sample_sql_file.sql sample_sql_file.sql
 
+
+
 CMD ["sh", "run.sh"]
