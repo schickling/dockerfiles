@@ -7,10 +7,7 @@ services:
       - POSTGRES_USER=user
       - PGDATA=/var/lib/postgresql/data/pgdata
   sut:
-    build:
-      context: .
-      args:
-        DOCKER_API_VERSION: "1.37"
+    image: robwithhair/postgres-backup-s3:this
     command: 'sh integration-tests.sh'
     depends_on:
       - postgres
