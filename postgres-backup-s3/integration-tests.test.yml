@@ -12,11 +12,11 @@ services:
       - source: master-db-config_2
         target: /etc/postgresql/postgresql.conf
     command: -c 'config_file=/etc/postgresql/postgresql.conf'
+  sut:
+    build: .
+    command: 'sh integration-tests.sh'
+    depends_on:
+      - postgres
 configs:
   master-db-config:
     file: ./config/master.conf
-sut:
-  build: .
-  command: 'sh integration-tests.sh'
-  depends_on:
-    - postgres
