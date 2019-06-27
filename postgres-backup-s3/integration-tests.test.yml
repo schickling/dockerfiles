@@ -7,7 +7,8 @@ services:
       - POSTGRES_USER=user
       - PGDATA=/var/lib/postgresql/data/pgdata
   sut:
-    image: robwithhair/postgres-backup-s3:this
+    build:
+      context: .
     command: 'sh integration-tests.sh'
     depends_on:
       - postgres
