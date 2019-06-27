@@ -2,21 +2,11 @@ version: '3.7'
 services:
   postgres:
     image: camptocamp/postgres:9.6
-    deploy:
-      replicas: 1
     environment:
       - POSTGRES_PASSWORD=12345
       - POSTGRES_USER=user
-      - PGDATA=/var/lib/postgresql/data/pgdata
-    configs:
-      - source: master-db-config_2
-        target: /etc/postgresql/postgresql.conf
-    command: -c 'config_file=/etc/postgresql/postgresql.conf'
   sut:
     build: .
     command: 'sh integration-tests.sh'
     depends_on:
       - postgres
-configs:
-  master-db-config:
-    file: ./config/master.conf
