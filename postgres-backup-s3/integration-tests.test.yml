@@ -1,6 +1,6 @@
 version: '3.7'
 services:
-  msuk_db:
+  postgres:
     image: camptocamp/postgres:9.6
     deploy:
       replicas: 1
@@ -18,3 +18,5 @@ configs:
 sut:
   build: .
   command: 'sh integration-tests.sh'
+  depends_on:
+    - postgres
