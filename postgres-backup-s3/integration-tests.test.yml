@@ -5,8 +5,11 @@ services:
     environment:
       - POSTGRES_PASSWORD=12345
       - POSTGRES_USER=user
+      - PGDATA=/var/lib/postgresql/data/pgdata
   sut:
     build: .
     command: 'sh integration-tests.sh'
+    environment:
+      - PGPASSWORD=12345
     depends_on:
       - postgres
