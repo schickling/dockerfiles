@@ -1,6 +1,8 @@
 FROM alpine:3.7
 LABEL maintainer="Johannes Schickling <schickling.j@gmail.com>"
 
+ARG DOCKER_API_VERSION
+
 ADD install.sh install.sh
 RUN sh install.sh && rm install.sh
 
@@ -15,6 +17,7 @@ ENV S3_SECRET_ACCESS_KEY **None**
 ENV S3_BUCKET **None**
 ENV S3_REGION us-west-1
 ENV S3_PATH 'backup'
+ENV S3_FILENAME **None**
 ENV S3_ENDPOINT **None**
 ENV S3_S3V4 no
 ENV SCHEDULE **None**
