@@ -40,3 +40,9 @@ You can additionally set the `SCHEDULE` environment variable like `-e SCHEDULE="
 
 More information about the scheduling can be found [here](http://godoc.org/github.com/robfig/cron#hdr-Predefined_schedules).
 
+### Overwriting S3 files
+
+You can use the following environment variable to disable the timestamps and set a custom name for the S3 files.
+- `S3_FILENAME` a consistent filename to overwrite with your backup.  If not set will use a timestamp.
+
+
