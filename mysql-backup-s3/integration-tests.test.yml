@@ -1,0 +1,6 @@
+version: '3.6'
+services:
+  sut:
+    build:
+      context: .
+    command: 'sh integration-tests.sh'

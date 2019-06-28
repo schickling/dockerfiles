@@ -9,7 +9,7 @@ services:
   sut:
     build:
       context: .
-    command: 'sh'
+    command: 'sh integration-tests.sh'
     depends_on:
       - postgres
     environment:
