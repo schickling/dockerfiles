@@ -20,6 +20,7 @@ curl -L --insecure https://github.com/odise/go-cron/releases/download/v0.0.6/go-
 chmod u+x /usr/local/bin/go-cron
 apk del curl
 
+apk add bash
 
 # cleanup
 rm -rf /var/cache/apk/*
