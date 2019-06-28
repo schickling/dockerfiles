@@ -24,3 +24,4 @@ services:
       - POSTGRES_USER=user
       - POSTGRES_PASSWORD=12345
       - POSTGRES_EXTRA_OPTS=--schema=public -b
+      - S3_FILENAME=postgres-backup-test
