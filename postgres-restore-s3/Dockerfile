@@ -14,6 +14,7 @@ ENV S3_SECRET_ACCESS_KEY **None**
 ENV S3_BUCKET **None**
 ENV S3_REGION us-west-1
 ENV S3_PATH 'backup'
+ENV S3_ENDPOINT **None**
 ENV DROP_PUBLIC 'no'
 
 ADD restore.sh restore.sh
