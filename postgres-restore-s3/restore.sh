@@ -67,7 +67,7 @@ fi
 
 echo "Restoring ${LATEST_BACKUP}"
 
-psql $POSTGRES_HOST_OPTS -d $POSTGRES_DATABASE < dump.sql
+psql $POSTGRES_HOST_OPTS < dump.sql
 
 echo "Restore complete"
 

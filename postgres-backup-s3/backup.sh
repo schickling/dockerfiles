@@ -58,8 +58,13 @@ export PGPASSWORD=$POSTGRES_PASSWORD
 POSTGRES_HOST_OPTS="-h $POSTGRES_HOST -p $POSTGRES_PORT -U $POSTGRES_USER $POSTGRES_EXTRA_OPTS"
 
 echo "Creating dump of ${POSTGRES_DATABASE} database from ${POSTGRES_HOST}..."
-
-pg_dump $POSTGRES_HOST_OPTS $POSTGRES_DATABASE | gzip > dump.sql.gz
+if ["${DUMPALL}" = "true" ]; then
+    echo "Creating dump of whole pg cluster from ${POSTGRES_HOST}..."
+    pg_dumpall $POSTGRES_HOST_OPTS | gzip > dump.sql.gz
+else
+    echo "Creating dump of ${POSTGRES_DATABASE} database from ${POSTGRES_HOST}..."
+    pg_dump $POSTGRES_HOST_OPTS $POSTGRES_DATABASE | gzip > dump.sql.gz
+fi
 
 echo "Uploading dump to $S3_BUCKET"
 
