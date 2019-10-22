@@ -73,7 +73,8 @@ fi
 
 echo "Restoring ${LATEST_BACKUP}"
 
-pg_restore $POSTGRES_HOST_OPTS -C -c --if-exists --no-owner -j $RESTORE_JOBS -v -d $POSTGRES_DATABASE dump.sql
+psql $POSTGRES_HOST_OPTS -d postgres -c "SELECT pg_terminate_backend(pg_stat_activity.pid) FROM pg_stat_activity WHERE pg_stat_activity.datname = '$POSTGRES_DATABASE' AND pid <> pg_backend_pid(); DROP DATABASE IF EXISTS $POSTGRES_DATABASE; CREATE DATABASE $POSTGRES_DATABASE; GRANT ALL PRIVILIGIES ON '$POSTGRES_DATABASE' TO '$POSTGRES_USER';"
+pg_restore $POSTGRES_HOST_OPTS --no-owner -j $RESTORE_JOBS -v -d $POSTGRES_DATABASE dump.sql
 
 echo "Restore complete"
 
