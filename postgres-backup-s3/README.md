@@ -28,6 +28,7 @@ pgbackups3:
     S3_SECRET_ACCESS_KEY: secret
     S3_BUCKET: my-bucket
     S3_PREFIX: backup
+    POSTGRES_HOST: host
     POSTGRES_DATABASE: dbname
     POSTGRES_USER: user
     POSTGRES_PASSWORD: password
