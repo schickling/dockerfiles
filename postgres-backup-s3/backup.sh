@@ -63,6 +63,10 @@ pg_dump $POSTGRES_HOST_OPTS -Fc $POSTGRES_DATABASE | gzip > dump.sql.gz
 
 echo "Uploading dump to $S3_BUCKET"
 
-cat dump.sql.gz | aws $AWS_ARGS s3 cp - s3://$S3_BUCKET/$S3_PREFIX/${POSTGRES_DATABASE}_$(date +"%Y-%m-%dT%H:%M:%SZ").sql.gz || exit 2
+if [ "${BOT_ID}" == "**None**" ] || [ "$CHAT_ID" == "**None**" ] || [ -z "$MSG" ]  ; then
+    cat dump.sql.gz | aws $AWS_ARGS s3 cp - s3://$S3_BUCKET/$S3_PREFIX/${POSTGRES_DATABASE}_$(date +"%Y-%m-%dT%H:%M:%SZ").sql.gz || exit 2
+else
+    cat dump.sql.gz | aws $AWS_ARGS s3 cp - s3://$S3_BUCKET/$S3_PREFIX/${POSTGRES_DATABASE}_$(date +"%Y-%m-%dT%H:%M:%SZ").sql.gz || (curl "https://api.telegram.org/$BOT_ID/sendMessage?chat_id=$CHAT_ID&parse_mode=html&text=$MSG" && exit 2) || exit 2
+fi
 
 echo "SQL backup uploaded successfully"
