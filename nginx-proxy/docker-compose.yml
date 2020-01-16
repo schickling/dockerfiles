@@ -1,0 +1,14 @@
+version: "2.0"
+services:
+  nginx-proxy:
+    image: nginx-proxy:1.17-headers-more
+    ports:
+      - "80:80"
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+      - ./vhost:/etc/nginx/vhost.d:ro
+
+  whoami:
+    image: jwilder/whoami
+    environment:
+      - VIRTUAL_HOST=whoami.local
