@@ -58,11 +58,17 @@ export PGPASSWORD=$POSTGRES_PASSWORD
 POSTGRES_HOST_OPTS="-h $POSTGRES_HOST -p $POSTGRES_PORT -U $POSTGRES_USER $POSTGRES_EXTRA_OPTS"
 
 echo "Creating dump of ${POSTGRES_DATABASE} database from ${POSTGRES_HOST}..."
+START=$(date +%s)
 
 pg_dump $POSTGRES_HOST_OPTS $POSTGRES_DATABASE | gzip > dump.sql.gz
+SIZE=$(ls -nlt dump.sql.gz | head -n1 | awk '{print $5}')
 
 echo "Uploading dump to $S3_BUCKET"
-
 cat dump.sql.gz | aws $AWS_ARGS s3 cp - s3://$S3_BUCKET/$S3_PREFIX/${POSTGRES_DATABASE}_$(date +"%Y-%m-%dT%H:%M:%SZ").sql.gz || exit 2
+END=$(date +%s)
+
+if [ "$ENABLE_METRICS" = true ]; then
+  write_metrics.sh "${START}" "${END}" "${SIZE}"
+fi
 
 echo "SQL backup uploaded successfully"

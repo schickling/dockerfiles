@@ -32,6 +32,7 @@ pgbackups3:
     POSTGRES_USER: user
     POSTGRES_PASSWORD: password
     POSTGRES_EXTRA_OPTS: '--schema=public --blobs'
+    ENABLE_METRICS: true
 ```
 
 ### Automatic Periodic Backups
@@ -40,3 +41,12 @@ You can additionally set the `SCHEDULE` environment variable like `-e SCHEDULE="
 
 More information about the scheduling can be found [here](http://godoc.org/github.com/robfig/cron#hdr-Predefined_schedules).
 
+### Metrics exporter
+
+Optionally you can also export backup metrics, e.g. size, start time in Prometheus
+file format. To read the metrics, you'll have to mount the metrics folder to your host at `/metrics`.
+The file is called `metrics.txt`.
+
+```sh
+$ docker run -v $(pwd)/metrics:/metrics -e ENABLE_METRICS=true -e ... schickling/postgres-backup-s3
+```

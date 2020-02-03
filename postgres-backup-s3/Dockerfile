@@ -2,7 +2,7 @@ FROM alpine:3.9
 LABEL maintainer="Johannes Schickling <schickling.j@gmail.com>"
 
 ADD install.sh install.sh
-RUN sh install.sh && rm install.sh
+RUN sh install.sh && rm install.sh && mkdir -p /metrics
 
 ENV POSTGRES_DATABASE **None**
 ENV POSTGRES_HOST **None**
@@ -18,8 +18,10 @@ ENV S3_PATH 'backup'
 ENV S3_ENDPOINT **None**
 ENV S3_S3V4 no
 ENV SCHEDULE **None**
+ENV ENABLE_METRICS false
 
 ADD run.sh run.sh
 ADD backup.sh backup.sh
+ADD write_metrics.sh write_metrics.sh
 
 CMD ["sh", "run.sh"]
