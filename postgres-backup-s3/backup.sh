@@ -18,7 +18,7 @@ if [ "${S3_BUCKET}" = "**None**" ]; then
   exit 1
 fi
 
-if [ "${POSTGRES_DATABASE}" = "**None**" ]; then
+if [ "${POSTGRES_DATABASE}" = "**None**" -a "${POSTGRES_BACKUP_ALL}" != "true" ]; then
   echo "You need to set the POSTGRES_DATABASE environment variable."
   exit 1
 fi
@@ -57,12 +57,43 @@ export AWS_DEFAULT_REGION=$S3_REGION
 export PGPASSWORD=$POSTGRES_PASSWORD
 POSTGRES_HOST_OPTS="-h $POSTGRES_HOST -p $POSTGRES_PORT -U $POSTGRES_USER $POSTGRES_EXTRA_OPTS"
 
-echo "Creating dump of ${POSTGRES_DATABASE} database from ${POSTGRES_HOST}..."
+if [ -z ${S3_PREFIX+x} ]; then
+  S3_PREFIX="/"
+else
+  S3_PREFIX="/${S3_PREFIX}/"  
+fi
 
-pg_dump $POSTGRES_HOST_OPTS $POSTGRES_DATABASE | gzip > dump.sql.gz
 
-echo "Uploading dump to $S3_BUCKET"
+if [ "${POSTGRES_BACKUP_ALL}" == "true" ]; then
+  echo "Creating dump of all databases from ${POSTGRES_HOST}..."
 
-cat dump.sql.gz | aws $AWS_ARGS s3 cp - s3://$S3_BUCKET/$S3_PREFIX/${POSTGRES_DATABASE}_$(date +"%Y-%m-%dT%H:%M:%SZ").sql.gz || exit 2
+  pg_dumpall -h $POSTGRES_HOST -p $POSTGRES_PORT -U $POSTGRES_USER | gzip > dump.sql.gz
 
-echo "SQL backup uploaded successfully"
+  echo "Uploading dump to $S3_BUCKET"
+
+  cat dump.sql.gz | aws $AWS_ARGS s3 cp - "s3://${S3_BUCKET}${S3_PREFIX}all_$(date +"%Y-%m-%dT%H:%M:%SZ").sql.gz" || exit 2
+
+  echo "SQL backup uploaded successfully"
+
+  rm -rf dump.sql.gz
+else
+  OIFS="$IFS"
+  IFS=','
+  for DB in $POSTGRES_DATABASE
+  do
+    IFS="$OIFS"
+
+    echo "Creating dump of ${DB} database from ${POSTGRES_HOST}..."
+
+    pg_dump $POSTGRES_HOST_OPTS $DB | gzip > dump.sql.gz
+
+    echo "Uploading dump to $S3_BUCKET"
+
+    cat dump.sql.gz | aws $AWS_ARGS s3 cp - "s3://${S3_BUCKET}${S3_PREFIX}${DB}_$(date +"%Y-%m-%dT%H:%M:%SZ").sql.gz" || exit 2
+
+    echo "SQL backup uploaded successfully"
+
+    rm -rf dump.sql.gz
+  done
+fi
+
