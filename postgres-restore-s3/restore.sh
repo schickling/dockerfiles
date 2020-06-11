@@ -1,6 +1,7 @@
 #! /bin/sh
 
 set -e
+set -x
 set -o pipefail
 
 if [ "${S3_ACCESS_KEY_ID}" = "**None**" ]; then
@@ -71,7 +72,7 @@ if [ "${DROP_PUBLIC}" == "yes" ]; then
 	psql $POSTGRES_HOST_OPTS -d "$POSTGRES_DATABASE" -c "drop schema public cascade; create schema public;"
 fi
 
-echo "Restoring ${LATEST_BACKUP}"
+echo "Restoring ${LATEST_BACKUP} to ${POSTGRES_DATABASE} on ${POSTGRES_HOST}:${POSTGRES_PORT} with user ${POSTGRES_USER}"
 
 psql $POSTGRES_HOST_OPTS -d postgres -c "SELECT pg_terminate_backend(pg_stat_activity.pid) FROM pg_stat_activity WHERE pg_stat_activity.datname = '$POSTGRES_DATABASE' AND pid <> pg_backend_pid();"
 psql $POSTGRES_HOST_OPTS -d postgres -c "DROP DATABASE IF EXISTS \"$POSTGRES_DATABASE\";"
