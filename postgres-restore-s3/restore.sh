@@ -74,10 +74,13 @@ fi
 
 echo "Restoring ${LATEST_BACKUP} to ${POSTGRES_DATABASE} on ${POSTGRES_HOST}:${POSTGRES_PORT} with user ${POSTGRES_USER}"
 
+set +e
 psql $POSTGRES_HOST_OPTS -d postgres -c "SELECT pg_terminate_backend(pg_stat_activity.pid) FROM pg_stat_activity WHERE pg_stat_activity.datname = '$POSTGRES_DATABASE' AND pid <> pg_backend_pid();"
 psql $POSTGRES_HOST_OPTS -d postgres -c "DROP DATABASE IF EXISTS \"$POSTGRES_DATABASE\";"
 psql $POSTGRES_HOST_OPTS -d postgres -c "CREATE DATABASE \"$POSTGRES_DATABASE\";"
 psql $POSTGRES_HOST_OPTS -d postgres -c "GRANT ALL PRIVILEGES ON DATABASE \"$POSTGRES_DATABASE\" TO $POSTGRES_USER;"
+
+set -e
 pg_restore $POSTGRES_HOST_OPTS --no-owner --single-transaction -n public --no-privileges -v -d "$POSTGRES_DATABASE" dump.sql
 
 echo "Restore complete"
