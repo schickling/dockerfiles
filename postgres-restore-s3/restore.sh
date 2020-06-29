@@ -84,7 +84,7 @@ psql $POSTGRES_HOST_OPTS -d postgres -c "ALTER EXTENSION citext SET SCHEMA publi
 psql $POSTGRES_HOST_OPTS -d postgres -c "CREATE EXTENSION IF NOT EXISTS plpgsql;"
 
 set -e
-pg_restore -v
+pg_restore -V
 pg_restore $POSTGRES_HOST_OPTS --no-owner --single-transaction -n public -v -d "$POSTGRES_DATABASE" dump.sql
 
 echo "Restore complete"
