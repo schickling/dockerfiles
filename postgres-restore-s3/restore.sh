@@ -80,7 +80,10 @@ psql $POSTGRES_HOST_OPTS -d postgres -c "DROP DATABASE IF EXISTS \"$POSTGRES_DAT
 psql $POSTGRES_HOST_OPTS -d postgres -c "CREATE DATABASE \"$POSTGRES_DATABASE\";"
 psql $POSTGRES_HOST_OPTS -d postgres -c "GRANT ALL PRIVILEGES ON DATABASE \"$POSTGRES_DATABASE\" TO $POSTGRES_USER;"
 psql $POSTGRES_HOST_OPTS -d postgres -c "CREATE EXTENSION IF NOT EXISTS citext;"
+psql $POSTGRES_HOST_OPTS -d postgres -c "ALTER EXTENSION citext SET SCHEMA public;"
 psql $POSTGRES_HOST_OPTS -d postgres -c "CREATE EXTENSION IF NOT EXISTS plpgsql;"
+psql $POSTGRES_HOST_OPTS -d postgres -c "ALTER EXTENSION plpgsql SET SCHEMA public;"
+
 set -e
 pg_restore $POSTGRES_HOST_OPTS --no-owner --single-transaction -n public --no-privileges -v -d "$POSTGRES_DATABASE" dump.sql
 
