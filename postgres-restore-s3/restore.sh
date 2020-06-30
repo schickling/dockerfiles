@@ -79,11 +79,11 @@ psql $POSTGRES_HOST_OPTS -d postgres -c "SELECT pg_terminate_backend(pg_stat_act
 psql $POSTGRES_HOST_OPTS -d postgres -c "DROP DATABASE IF EXISTS \"$POSTGRES_DATABASE\";"
 psql $POSTGRES_HOST_OPTS -d postgres -c "CREATE DATABASE \"$POSTGRES_DATABASE\";"
 psql $POSTGRES_HOST_OPTS -d postgres -c "GRANT ALL PRIVILEGES ON DATABASE \"$POSTGRES_DATABASE\" TO $POSTGRES_USER;"
-psql $POSTGRES_HOST_OPTS -d postgres -c "CREATE EXTENSION IF NOT EXISTS citext;"
-psql $POSTGRES_HOST_OPTS -d postgres -c "ALTER EXTENSION citext SET SCHEMA public;"
-psql $POSTGRES_HOST_OPTS -d postgres -c "CREATE EXTENSION IF NOT EXISTS plpgsql;"
 
 set -e
+psql $POSTGRES_HOST_OPTS -d "$POSTGRES_DATABASE" -c "CREATE EXTENSION IF NOT EXISTS citext;"
+psql $POSTGRES_HOST_OPTS -d "$POSTGRES_DATABASE" -c "ALTER EXTENSION citext SET SCHEMA public;"
+psql $POSTGRES_HOST_OPTS -d "$POSTGRES_DATABASE" -c "CREATE EXTENSION IF NOT EXISTS plpgsql;"
 pg_restore -V
 pg_restore $POSTGRES_HOST_OPTS --no-owner --single-transaction -n public -v -d "$POSTGRES_DATABASE" dump.sql
 
