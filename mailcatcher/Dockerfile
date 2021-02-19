@@ -1,4 +1,4 @@
-FROM ruby:2.4-alpine3.6
+FROM ruby:2.7.2-alpine
 
 LABEL maintainer="Johannes Schickling <schickling.j@gmail.com>"
 
@@ -9,7 +9,7 @@ RUN set -xe \
     && apk add --no-cache --virtual .build-deps \
         build-base \
         sqlite-dev \
-    && gem install mailcatcher -v 0.6.5 --no-ri --no-rdoc \
+    && gem install mailcatcher -v 0.7.1 --no-document \
     && apk del .build-deps
 
 # smtp port
