@@ -16,8 +16,10 @@ $ docker run -e S3_ACCESS_KEY_ID=key -e S3_SECRET_ACCESS_KEY=secret -e S3_BUCKET
 - `MYSQL_PORT` the mysql port (default: 3306)
 - `MYSQL_USER` the mysql user *required*
 - `MYSQL_PASSWORD` the mysql password *required*
+- `MYSQL_PASSWORD_FILE` path to file containing the mysql password; alternative to `MYSQL_PASSWORD`
 - `S3_ACCESS_KEY_ID` your AWS access key *required*
 - `S3_SECRET_ACCESS_KEY` your AWS secret key *required*
+- `S3_SECRET_ACCESS_KEY_FILE` path to file containing  your AWS secret key; alternative to `S3_SECRET_ACCESS_KEYs`
 - `S3_BUCKET` your AWS S3 bucket path *required*
 - `S3_PREFIX` path prefix in your bucket (default: 'backup')
 - `S3_FILENAME` a consistent filename to overwrite with your backup.  If not set will use a timestamp.
