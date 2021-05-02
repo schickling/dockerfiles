@@ -3,11 +3,18 @@
 set -e
 
 if [ -n "${MYSQL_PASSWORD_FILE}" ]; then
-  export MYSQL_PASSWORD=$(cat $MYSQL_PASSWORD_FILE)
+  MYSQL_PASSWORD=$(cat "$MYSQL_PASSWORD_FILE")
+  export MYSQL_PASSWORD
+fi
+
+if [ -n "${S3_ACCESS_KEY_ID_FILE}" ]; then
+  S3_ACCESS_KEY_ID=$(cat "$S3_ACCESS_KEY_ID_FILE")
+  export S3_ACCESS_KEY_ID
 fi
 
 if [ -n "${S3_SECRET_ACCESS_KEY_FILE}" ]; then
-  export S3_SECRET_ACCESS_KEY=$(cat $S3_SECRET_ACCESS_KEY_FILE)
+  S3_SECRET_ACCESS_KEY=$(cat "$S3_SECRET_ACCESS_KEY_FILE")
+  export S3_SECRET_ACCESS_KEY
 fi
 
 if [ "${S3_ACCESS_KEY_ID}" == "**None**" ]; then
@@ -58,7 +65,8 @@ copy_s3 () {
     AWS_ARGS="--endpoint-url ${S3_ENDPOINT}"
   fi
 
-  echo "Uploading ${DEST_FILE} on S3..."
+  echo "$AWS_ARGS"
+  echo "Uploading ${DEST_FILE} to S3..."
 
   cat $SRC_FILE | aws $AWS_ARGS s3 cp - s3://$S3_BUCKET/$S3_PREFIX/$DEST_FILE
 
@@ -68,6 +76,7 @@ copy_s3 () {
 
   rm $SRC_FILE
 }
+
 # Multi file: yes
 if [ ! -z "$(echo $MULTI_FILES | grep -i -E "(yes|true|1)")" ]; then
   if [ "${MYSQLDUMP_DATABASE}" == "--all-databases" ]; then
