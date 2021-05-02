@@ -65,7 +65,6 @@ copy_s3 () {
     AWS_ARGS="--endpoint-url ${S3_ENDPOINT}"
   fi
 
-  echo "$AWS_ARGS"
   echo "Uploading ${DEST_FILE} to S3..."
 
   cat $SRC_FILE | aws $AWS_ARGS s3 cp - s3://$S3_BUCKET/$S3_PREFIX/$DEST_FILE
