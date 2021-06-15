@@ -1,4 +1,4 @@
-#! /bin/sh
+#!/bin/sh
 
 set -e
 
@@ -9,5 +9,6 @@ fi
 if [ "${SCHEDULE}" = "**None**" ]; then
   sh backup.sh
 else
-  exec go-cron "$SCHEDULE" /bin/sh backup.sh
+  echo "$SCHEDULE /bin/sh /backup.sh" > /etc/crontabs/root
+  exec crond -d 8 -f
 fi
