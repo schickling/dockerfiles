@@ -18,6 +18,10 @@ ENV S3_PATH 'backup'
 ENV S3_ENDPOINT **None**
 ENV S3_S3V4 no
 ENV SCHEDULE **None**
+# Telegram alerting
+ENV BOT_ID **None**
+ENV CHAT_ID **None**
+ENV MSG ''
 
 ADD run.sh run.sh
 ADD backup.sh backup.sh

@@ -1,0 +1,4 @@
+        more_set_headers 'Access-Control-Allow-Origin: http://whoami.local';
+        more_set_headers 'Access-Control-Allow-Methods: GET';
+        more_set_headers 'Access-Control-Allow-Headers: User-Agent,Keep-Alive,Content-Type';
+        more_set_headers 'Access-Control-Expose-Headers: Content-Length,Content-Range';

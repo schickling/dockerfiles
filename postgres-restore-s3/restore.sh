@@ -1,6 +1,7 @@
 #! /bin/sh
 
 set -e
+set -x
 set -o pipefail
 
 if [ "${S3_ACCESS_KEY_ID}" = "**None**" ]; then
@@ -43,6 +44,12 @@ if [ "${POSTGRES_PASSWORD}" = "**None**" ]; then
   exit 1
 fi
 
+if [ "${S3_ENDPOINT}" == "**None**" ]; then
+  AWS_ARGS=""
+else
+  AWS_ARGS="--endpoint-url ${S3_ENDPOINT}"
+fi
+
 # env vars needed for aws tools
 export AWS_ACCESS_KEY_ID=$S3_ACCESS_KEY_ID
 export AWS_SECRET_ACCESS_KEY=$S3_SECRET_ACCESS_KEY
@@ -53,21 +60,32 @@ POSTGRES_HOST_OPTS="-h $POSTGRES_HOST -p $POSTGRES_PORT -U $POSTGRES_USER"
 
 echo "Finding latest backup"
 
-LATEST_BACKUP=$(aws s3 ls s3://$S3_BUCKET/$S3_PREFIX/ | sort | tail -n 1 | awk '{ print $4 }')
+LATEST_BACKUP=$(aws $AWS_ARGS s3 ls s3://$S3_BUCKET/$S3_PREFIX/ | sort | tail -n 1 | awk '{ print $4 }')
 
 echo "Fetching ${LATEST_BACKUP} from S3"
 
-aws s3 cp s3://$S3_BUCKET/$S3_PREFIX/${LATEST_BACKUP} dump.sql.gz
+aws $AWS_ARGS s3 cp s3://$S3_BUCKET/$S3_PREFIX/${LATEST_BACKUP} dump.sql.gz
 gzip -d dump.sql.gz
 
 if [ "${DROP_PUBLIC}" == "yes" ]; then
 	echo "Recreating the public schema"
-	psql $POSTGRES_HOST_OPTS -d $POSTGRES_DATABASE -c "drop schema public cascade; create schema public;"
+	psql $POSTGRES_HOST_OPTS -d "$POSTGRES_DATABASE" -c "drop schema public cascade; create schema public;"
 fi
 
-echo "Restoring ${LATEST_BACKUP}"
+echo "Restoring ${LATEST_BACKUP} to ${POSTGRES_DATABASE} on ${POSTGRES_HOST}:${POSTGRES_PORT} with user ${POSTGRES_USER}"
 
-psql $POSTGRES_HOST_OPTS -d $POSTGRES_DATABASE < dump.sql
+set +e
+psql $POSTGRES_HOST_OPTS -d postgres -c "SELECT pg_terminate_backend(pg_stat_activity.pid) FROM pg_stat_activity WHERE pg_stat_activity.datname = '$POSTGRES_DATABASE' AND pid <> pg_backend_pid();"
+psql $POSTGRES_HOST_OPTS -d postgres -c "DROP DATABASE IF EXISTS \"$POSTGRES_DATABASE\";"
+psql $POSTGRES_HOST_OPTS -d postgres -c "CREATE DATABASE \"$POSTGRES_DATABASE\";"
+psql $POSTGRES_HOST_OPTS -d postgres -c "GRANT ALL PRIVILEGES ON DATABASE \"$POSTGRES_DATABASE\" TO $POSTGRES_USER;"
+
+set -e
+psql $POSTGRES_HOST_OPTS -d "$POSTGRES_DATABASE" -c "CREATE EXTENSION IF NOT EXISTS citext;"
+psql $POSTGRES_HOST_OPTS -d "$POSTGRES_DATABASE" -c "ALTER EXTENSION citext SET SCHEMA public;"
+psql $POSTGRES_HOST_OPTS -d "$POSTGRES_DATABASE" -c "CREATE EXTENSION IF NOT EXISTS plpgsql;"
+pg_restore -V
+pg_restore $POSTGRES_HOST_OPTS --no-owner --single-transaction -n public --no-privileges -v -d "$POSTGRES_DATABASE" dump.sql
 
 echo "Restore complete"
 
