@@ -49,6 +49,11 @@ else
   AWS_ARGS="--endpoint-url ${S3_ENDPOINT}"
 fi
 
+if [ "${DB_ENV_PREFIX}" = "**None**" ]; then
+  echo "You need to set the DB_ENV_PREFIX environment variable."
+  exit 1
+fi
+
 # env vars needed for aws tools
 export AWS_ACCESS_KEY_ID=$S3_ACCESS_KEY_ID
 export AWS_SECRET_ACCESS_KEY=$S3_SECRET_ACCESS_KEY
@@ -61,8 +66,10 @@ echo "Creating dump of ${POSTGRES_DATABASE} database from ${POSTGRES_HOST}..."
 
 pg_dump $POSTGRES_HOST_OPTS $POSTGRES_DATABASE | gzip > dump.sql.gz
 
-echo "Uploading dump to $S3_BUCKET"
+FILENAME=${DB_ENV_PREFIX}_${POSTGRES_DATABASE}_$(date +"%Y-%m-%dT%H_%M_%SZ").sql.gz
 
-cat dump.sql.gz | aws $AWS_ARGS s3 cp - s3://$S3_BUCKET/$S3_PREFIX/${POSTGRES_DATABASE}_$(date +"%Y-%m-%dT%H:%M:%SZ").sql.gz || exit 2
+echo "Uploading dump named $FILENAME to $S3_BUCKET"
+
+cat dump.sql.gz | aws $AWS_ARGS s3 cp - s3://$S3_BUCKET/$S3_PREFIX/$FILENAME || exit 2
 
 echo "SQL backup uploaded successfully"

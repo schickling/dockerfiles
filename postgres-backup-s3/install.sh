@@ -7,7 +7,7 @@ set -e
 apk update
 
 # install pg_dump
-apk add postgresql
+apk add postgresql-client
 
 # install s3 tools
 apk add python py2-pip
