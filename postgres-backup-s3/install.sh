@@ -6,6 +6,9 @@ set -e
 
 apk update
 
+# install openssl
+apk add openssl
+
 # install pg_dump
 apk add postgresql
 

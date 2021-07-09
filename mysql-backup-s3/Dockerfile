@@ -20,6 +20,7 @@ ENV S3_PREFIX 'backup'
 ENV S3_FILENAME **None**
 ENV MULTI_FILES no
 ENV SCHEDULE **None**
+ENV ENCRYPTION_PASSWORD **None**
 
 ADD run.sh run.sh
 ADD backup.sh backup.sh

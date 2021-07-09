@@ -44,6 +44,17 @@ copy_s3 () {
   SRC_FILE=$1
   DEST_FILE=$2
 
+  if [ "${ENCRYPTION_PASSWORD}" != "**None**" ]; then
+    echo "Encrypting ${SRC_FILE}"
+    openssl enc -aes-256-cbc -in $SRC_FILE -out ${SRC_FILE}.enc -k $ENCRYPTION_PASSWORD
+    if [ $? != 0 ]; then
+      >&2 echo "Error encrypting ${SRC_FILE}"
+    fi
+    rm $SRC_FILE
+    SRC_FILE="${SRC_FILE}.enc"
+    DEST_FILE="${DEST_FILE}.enc"
+  fi
+
   if [ "${S3_ENDPOINT}" == "**None**" ]; then
     AWS_ARGS=""
   else

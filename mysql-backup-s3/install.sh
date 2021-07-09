@@ -5,6 +5,9 @@ set -e
 
 apk update
 
+# install openssl
+apk add openssl
+
 # install mysqldump
 apk add mysql-client
 
