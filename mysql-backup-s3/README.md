@@ -26,9 +26,16 @@ $ docker run -e S3_ACCESS_KEY_ID=key -e S3_SECRET_ACCESS_KEY=secret -e S3_BUCKET
 - `S3_S3V4` set to `yes` to enable AWS Signature Version 4, required for [minio](https://minio.io) servers (default: no)
 - `MULTI_FILES` Allow to have one file per database if set `yes` default: no)
 - `SCHEDULE` backup schedule time, see explainatons below
+- `DELETE_OLDER_THAN` delete old backups, see explanation and warning below
 
 ### Automatic Periodic Backups
 
 You can additionally set the `SCHEDULE` environment variable like `-e SCHEDULE="@daily"` to run the backup automatically.
 
 More information about the scheduling can be found [here](http://godoc.org/github.com/robfig/cron#hdr-Predefined_schedules).
+
+### Delete Old Backups
+
+You can additionally set the `DELETE_OLDER_THAN` environment variable like `-e DELETE_OLDER_THAN="30 days ago"` to delete old backups.
+
+WARNING: this will delete all files in the S3_PREFIX path, not just those created by this script.

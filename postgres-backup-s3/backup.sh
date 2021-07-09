@@ -65,4 +65,22 @@ echo "Uploading dump to $S3_BUCKET"
 
 cat dump.sql.gz | aws $AWS_ARGS s3 cp - s3://$S3_BUCKET/$S3_PREFIX/${POSTGRES_DATABASE}_$(date +"%Y-%m-%dT%H:%M:%SZ").sql.gz || exit 2
 
+if [ "${DELETE_OLDER_THAN}" != "**None**" ]; then
+  aws $AWS_ARGS s3 ls s3://$S3_BUCKET/$S3_PREFIX/ | grep " PRE " -v | while read -r line;
+    do
+      created=`echo $line|awk {'print $1" "$2'}`
+      created=`date -d "$created" +%s`
+      older_than=`date -d "$DELETE_OLDER_THAN" +%s`
+      if [ $created -lt $older_than ]
+        then
+          fileName=`echo $line|awk {'print $4'}`
+          if [ $fileName != "" ]
+            then
+              printf 'Deleting "%s"\n' $fileName
+              aws $AWS_ARGS s3 rm s3://$S3_BUCKET/$S3_PREFIX/$fileName
+          fi
+      fi
+    done;
+fi
+
 echo "SQL backup uploaded successfully"
