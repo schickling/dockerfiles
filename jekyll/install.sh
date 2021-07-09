@@ -1,7 +1,7 @@
 #! /bin/bash
 
 # exit if a command fails
-set -e
+set -eo pipefail
 
 # install ruby 1.9.1
 apt-get update && apt-get install -y ruby ruby-dev build-essential

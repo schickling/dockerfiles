@@ -1,7 +1,7 @@
 #! /bin/bash
 
 # exit if a command fails
-set -e
+set -eo pipefail
 
 # install hugin & panotools
 apt-get update && apt-get install -y hugin

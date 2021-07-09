@@ -1,6 +1,6 @@
 #! /bin/sh
 
-set -e
+set -eo pipefail
 
 replace_in_index () {
   if [ "$1" != "**None**" ]; then

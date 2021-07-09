@@ -1,7 +1,7 @@
 #! /bin/bash
 
 # exit if a command fails
-set -e
+set -eo pipefail
 
 # install octave 3.6.2 (less needed as frontend)
 apt-get update && apt-get install -y octave less

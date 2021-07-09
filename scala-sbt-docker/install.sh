@@ -1,7 +1,7 @@
 #! /bin/bash
 
 # exit if a command fails
-set -e
+set -eo pipefail
 
 # install node & npm
 apt-get update && apt-get install -y nodejs npm
