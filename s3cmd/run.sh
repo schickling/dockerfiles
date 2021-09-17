@@ -1,6 +1,6 @@
 #! /bin/sh
 
-set -e
+set -eo pipefail
 
 echo "Running s3cmd ..."
 

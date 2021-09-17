@@ -1,7 +1,7 @@
 #! /bin/bash
 
 # exit if a command fails
-set -e
+set -eo pipefail
 
 # install full texlive distribution
 apt-get update && apt-get install -y texlive-full

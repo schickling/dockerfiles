@@ -31,8 +31,8 @@ pgbackups3:
     S3_BUCKET: my-bucket
     S3_PREFIX: backup
     POSTGRES_BACKUP_ALL: "false"
-    POSTGRES_HOST: postgres
-    POSTGRES_DATABASE: dbname,dbname1,dbname2
+    POSTGRES_HOST: host
+    POSTGRES_DATABASE: dbname
     POSTGRES_USER: user
     POSTGRES_PASSWORD: password
     POSTGRES_EXTRA_OPTS: '--schema=public --blobs'
