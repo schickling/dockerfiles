@@ -26,6 +26,7 @@ $ docker run -e S3_ACCESS_KEY_ID=key -e S3_SECRET_ACCESS_KEY=secret -e S3_BUCKET
 - `S3_S3V4` set to `yes` to enable AWS Signature Version 4, required for [minio](https://minio.io) servers (default: no)
 - `MULTI_FILES` Allow to have one file per database if set `yes` default: no)
 - `SCHEDULE` backup schedule time, see explainatons below
+- `ENCRYPTION_PASSWORD` password to encrypt the backup. Can be decrypted using `openssl aes-256-cbc -d -in backup.sql.gz.enc -out backup.sql.gz`
 
 ### Automatic Periodic Backups
 
