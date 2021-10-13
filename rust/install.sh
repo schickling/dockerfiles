@@ -1,7 +1,7 @@
 #! /bin/bash
 
 # exit if a command fails
-set -e
+set -eo pipefail
 
 # install curl (needed to install rust)
 apt-get update && apt-get install -y curl gdb g++-multilib lib32stdc++6 libssl-dev libncurses5-dev

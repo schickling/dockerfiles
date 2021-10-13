@@ -1,7 +1,7 @@
 #! /bin/sh
 
 # exit if a command fails
-set -e
+set -eo pipefail
 
 # install s3cmd
 apk update

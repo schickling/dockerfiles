@@ -1,4 +1,4 @@
-FROM debian:wheezy
+FROM debian:buster
 LABEL maintainer="Johannes Schickling <schickling.j@gmail.com>"
 
 ENV DEBIAN_FRONTEND noninteractive
