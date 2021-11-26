@@ -10,9 +10,9 @@ apk update
 apk add postgresql
 
 # install s3 tools
-apk add python py2-pip
+apk add python3 py3-pip
 pip install awscli
-apk del py2-pip
+apk del py3-pip
 
 # install go-cron
 apk add curl
