@@ -5,6 +5,7 @@ ADD install.sh install.sh
 RUN sh install.sh && rm install.sh
 
 ENV POSTGRES_DATABASE **None**
+ENV POSTGRES_BACKUP_ALL **None**
 ENV POSTGRES_HOST **None**
 ENV POSTGRES_PORT 5432
 ENV POSTGRES_USER **None**
