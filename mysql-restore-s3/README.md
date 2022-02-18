@@ -27,6 +27,7 @@ $ docker run -e S3_ACCESS_KEY_ID=key -e S3_SECRET_ACCESS_KEY=secret -e S3_BUCKET
 - `MYSQL_PORT` the mysql port (default: 3306)
 - `MYSQL_USER` the mysql user *required*
 - `MYSQL_PASSWORD` the mysql password *required*
+- `MYSQL_OPTS` options to use when calling MySQL command (to set, e.g. encoding)
 - `S3_ACCESS_KEY_ID` your AWS access key *required*
 - `S3_SECRET_ACCESS_KEY` your AWS secret key *required*
 - `S3_BUCKET` your AWS S3 bucket path *required*
