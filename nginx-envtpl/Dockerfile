@@ -11,7 +11,7 @@ RUN apt-get update \
             python-setuptools \
 	&& rm -rf /var/lib/apt/lists/*
 
-RUN pip install envtpl
+RUN pip2 install envtpl
 
 COPY entrypoint.sh /
 
