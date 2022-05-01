@@ -2,7 +2,7 @@ define docker_build_and_push
 	docker buildx build \
 		--push \
 		--platform linux/arm64,linux/amd64 \
-		-t "schickling/$1" \
+		-t "schickling/$1:$(if $2,$2,latest)" \
 		./$1
 endef
 
