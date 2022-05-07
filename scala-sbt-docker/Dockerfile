@@ -5,24 +5,22 @@ FROM openjdk:8
 # START COPY FROM https://github.com/hseeberger/scala-sbt/blob/master/Dockerfile
 ###
 
-ENV SCALA_VERSION 2.12.1
-ENV SBT_VERSION 0.13.13
+ENV SCALA_VERSION 2.13.8
+ENV SBT_VERSION 1.6.2
 
 # Install Scala
 ## Piping curl directly in tar
 RUN \
-  curl -fsL http://downloads.typesafe.com/scala/$SCALA_VERSION/scala-$SCALA_VERSION.tgz | tar xfz - -C /root/ && \
+  curl -fsL https://downloads.lightbend.com/scala/$SCALA_VERSION/scala-$SCALA_VERSION.tgz | tar xfz - -C /root/ && \
   echo >> /root/.bashrc && \
   echo 'export PATH=~/scala-$SCALA_VERSION/bin:$PATH' >> /root/.bashrc
 
 # Install sbt
 RUN \
-  curl -L -o sbt-$SBT_VERSION.deb http://dl.bintray.com/sbt/debian/sbt-$SBT_VERSION.deb && \
-  dpkg -i sbt-$SBT_VERSION.deb && \
-  rm sbt-$SBT_VERSION.deb && \
-  apt-get update && \
-  apt-get install sbt && \
-  sbt sbtVersion
+  curl -fsL "https://github.com/sbt/sbt/releases/download/v$SBT_VERSION/sbt-$SBT_VERSION.tgz" | tar xfz - -C /usr/share && \
+  chown -R root:root /usr/share/sbt && \
+  chmod -R 755 /usr/share/sbt && \
+  ln -s /usr/share/sbt/bin/sbt /usr/local/bin/sbt
 
 # Define working directory
 WORKDIR /root
