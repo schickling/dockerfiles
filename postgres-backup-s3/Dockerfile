@@ -1,4 +1,4 @@
-FROM alpine:3.15
+FROM webdevops/go-crond:master-alpine
 LABEL maintainer="Johannes Schickling <schickling.j@gmail.com>"
 
 ADD install.sh install.sh
@@ -19,8 +19,10 @@ ENV S3_PATH 'backup'
 ENV S3_ENDPOINT **None**
 ENV S3_S3V4 no
 ENV SCHEDULE **None**
+ENV ENCRYPTION_PASSWORD **None**
 
 ADD run.sh run.sh
 ADD backup.sh backup.sh
 
+ENTRYPOINT []
 CMD ["sh", "run.sh"]

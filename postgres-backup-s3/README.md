@@ -57,3 +57,7 @@ An Endpoint is the URL of the entry point for an AWS web service or S3 Compitabl
 You can specify an alternate endpoint by setting `S3_ENDPOINT` environment variable like `protocol://endpoint`
 
 **Note:** S3 Compitable Storage Provider requires `S3_ENDPOINT` environment variable
+
+### Encryption
+
+You can additionally set the `ENCRYPTION_PASSWORD` environment variable like `-e ENCRYPTION_PASSWORD="superstrongpassword"` to encrypt the backup. It can be decrypted using `openssl aes-256-cbc -d -in backup.sql.gz.enc -out backup.sql.gz`.

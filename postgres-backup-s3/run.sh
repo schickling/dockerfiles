@@ -9,5 +9,6 @@ fi
 if [ "${SCHEDULE}" = "**None**" ]; then
   sh backup.sh
 else
-  exec go-cron "$SCHEDULE" /bin/sh backup.sh
+  echo -e "SHELL=/bin/sh\n${SCHEDULE} /bin/sh /backup.sh" > /etc/crontabs/root
+  exec go-crond /etc/crontabs/root
 fi

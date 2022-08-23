@@ -1,7 +1,6 @@
 #! /bin/sh
 
 set -eo pipefail
-set -o pipefail
 
 if [ "${S3_ACCESS_KEY_ID}" = "**None**" ]; then
   echo "You need to set the S3_ACCESS_KEY_ID environment variable."
@@ -60,22 +59,32 @@ POSTGRES_HOST_OPTS="-h $POSTGRES_HOST -p $POSTGRES_PORT -U $POSTGRES_USER $POSTG
 if [ -z ${S3_PREFIX+x} ]; then
   S3_PREFIX="/"
 else
-  S3_PREFIX="/${S3_PREFIX}/"  
+  S3_PREFIX="/${S3_PREFIX}/"
 fi
 
-
 if [ "${POSTGRES_BACKUP_ALL}" == "true" ]; then
-  echo "Creating dump of all databases from ${POSTGRES_HOST}..."
+  SRC_FILE=dump.sql.gz
+  DEST_FILE=all_$(date +"%Y-%m-%dT%H:%M:%SZ").sql.gz
 
-  pg_dumpall -h $POSTGRES_HOST -p $POSTGRES_PORT -U $POSTGRES_USER | gzip > dump.sql.gz
+  echo "Creating dump of all databases from ${POSTGRES_HOST}..."
+  pg_dumpall -h $POSTGRES_HOST -p $POSTGRES_PORT -U $POSTGRES_USER | gzip > $SRC_FILE
+
+  if [ "${ENCRYPTION_PASSWORD}" != "**None**" ]; then
+    echo "Encrypting ${SRC_FILE}"
+    openssl enc -aes-256-cbc -in $SRC_FILE -out ${SRC_FILE}.enc -k $ENCRYPTION_PASSWORD
+    if [ $? != 0 ]; then
+      >&2 echo "Error encrypting ${SRC_FILE}"
+    fi
+    rm $SRC_FILE
+    SRC_FILE="${SRC_FILE}.enc"
+    DEST_FILE="${DEST_FILE}.enc"
+  fi
 
   echo "Uploading dump to $S3_BUCKET"
-
-  cat dump.sql.gz | aws $AWS_ARGS s3 cp - "s3://${S3_BUCKET}${S3_PREFIX}all_$(date +"%Y-%m-%dT%H:%M:%SZ").sql.gz" || exit 2
+  cat $SRC_FILE | aws $AWS_ARGS s3 cp - "s3://${S3_BUCKET}${S3_PREFIX}${DEST_FILE}" || exit 2
 
   echo "SQL backup uploaded successfully"
-
-  rm -rf dump.sql.gz
+  rm -rf $SRC_FILE
 else
   OIFS="$IFS"
   IFS=','
@@ -83,17 +92,27 @@ else
   do
     IFS="$OIFS"
 
-    echo "Creating dump of ${DB} database from ${POSTGRES_HOST}..."
+    SRC_FILE=dump.sql.gz
+    DEST_FILE${DB}_$(date +"%Y-%m-%dT%H:%M:%SZ").sql.gz
 
-    pg_dump $POSTGRES_HOST_OPTS $DB | gzip > dump.sql.gz
+    if [ "${ENCRYPTION_PASSWORD}" != "**None**" ]; then
+      echo "Encrypting ${SRC_FILE}"
+      openssl enc -aes-256-cbc -in $SRC_FILE -out ${SRC_FILE}.enc -k $ENCRYPTION_PASSWORD
+      if [ $? != 0 ]; then
+        >&2 echo "Error encrypting ${SRC_FILE}"
+      fi
+      rm $SRC_FILE
+      SRC_FILE="${SRC_FILE}.enc"
+      DEST_FILE="${DEST_FILE}.enc"
+    fi
+
+    echo "Creating dump of ${DB} database from ${POSTGRES_HOST}..."
+    pg_dump $POSTGRES_HOST_OPTS $DB | gzip > $SRC_FILE
 
     echo "Uploading dump to $S3_BUCKET"
-
-    cat dump.sql.gz | aws $AWS_ARGS s3 cp - "s3://${S3_BUCKET}${S3_PREFIX}${DB}_$(date +"%Y-%m-%dT%H:%M:%SZ").sql.gz" || exit 2
+    cat $SRC_FILE | aws $AWS_ARGS s3 cp - "s3://${S3_BUCKET}${S3_PREFIX}${DEST_FILE}" || exit 2
 
     echo "SQL backup uploaded successfully"
-
-    rm -rf dump.sql.gz
+    rm -rf $SRC_FILE
   done
 fi
-
