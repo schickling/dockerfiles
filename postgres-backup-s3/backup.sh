@@ -93,7 +93,7 @@ else
     IFS="$OIFS"
 
     SRC_FILE=dump.sql.gz
-    DEST_FILE${DB}_$(date +"%Y-%m-%dT%H:%M:%SZ").sql.gz
+    DEST_FILE=${DB}_$(date +"%Y-%m-%dT%H:%M:%SZ").sql.gz
 
     if [ "${ENCRYPTION_PASSWORD}" != "**None**" ]; then
       echo "Encrypting ${SRC_FILE}"
