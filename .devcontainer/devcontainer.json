@@ -2,6 +2,7 @@
 {
 	"name": "Docker Devcontainer",
 	"image": "mcr.microsoft.com/vscode/devcontainers/base:0-ubuntu-22.04",
+	"postCreateCommand": "docker buildx create --use",
 
 	"forwardPorts": [],
 	"remoteUser": "vscode",
