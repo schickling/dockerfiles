@@ -1,4 +1,0 @@
-script: true
-after_script: curl --data "build=true" -X POST https://registry.hub.docker.com/u/schickling/rust/trigger/3dc5f3c8-680b-11e4-aea0-d22c3a4d29af/
-notifications:
-  email: false
