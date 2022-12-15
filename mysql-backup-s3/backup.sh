@@ -69,6 +69,12 @@ copy_s3 () {
 
   rm $SRC_FILE
 }
+
+# mysqldump extra options
+if [ ! -z "${MYSQLDUMP_EXTRA_OPTIONS}" ]; then
+  MYSQLDUMP_OPTIONS="${MYSQLDUMP_OPTIONS} ${MYSQLDUMP_EXTRA_OPTIONS}"
+fi
+
 # Multi file: yes
 if [ ! -z "$(echo $MULTI_FILES | grep -i -E "(yes|true|1)")" ]; then
   if [ "${MYSQLDUMP_DATABASE}" == "--all-databases" ]; then

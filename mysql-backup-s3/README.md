@@ -11,6 +11,7 @@ $ docker run -e S3_ACCESS_KEY_ID=key -e S3_SECRET_ACCESS_KEY=secret -e S3_BUCKET
 ## Environment variables
 
 - `MYSQLDUMP_OPTIONS` mysqldump options (default: --quote-names --quick --add-drop-table --add-locks --allow-keywords --disable-keys --extended-insert --single-transaction --create-options --comments --net_buffer_length=16384)
+- `MYSQLDUMP_EXTRA_OPTIONS` add mysqldump options without overriding the default `MYSQLDUMP_OPTIONS` (default: empty)
 - `MYSQLDUMP_DATABASE` list of databases you want to backup (default: --all-databases)
 - `MYSQL_HOST` the mysql host *required*
 - `MYSQL_PORT` the mysql port (default: 3306)
