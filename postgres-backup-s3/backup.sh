@@ -65,6 +65,10 @@ fi
 if [ "${POSTGRES_BACKUP_ALL}" == "true" ]; then
   SRC_FILE=dump.sql.gz
   DEST_FILE=all_$(date +"%Y-%m-%dT%H:%M:%SZ").sql.gz
+  
+  if [ "${S3_FILE_NAME}" != "**None**" ]; then
+    DEST_FILE=${S3_FILE_NAME}.sql.gz
+  fi
 
   echo "Creating dump of all databases from ${POSTGRES_HOST}..."
   pg_dumpall -h $POSTGRES_HOST -p $POSTGRES_PORT -U $POSTGRES_USER | gzip > $SRC_FILE
@@ -94,6 +98,10 @@ else
 
     SRC_FILE=dump.sql.gz
     DEST_FILE=${DB}_$(date +"%Y-%m-%dT%H:%M:%SZ").sql.gz
+
+    if [ "${S3_FILE_NAME}" != "**None**" ]; then
+      DEST_FILE=${S3_FILE_NAME}_${DB}.sql.gz
+    fi
     
     echo "Creating dump of ${DB} database from ${POSTGRES_HOST}..."
     pg_dump $POSTGRES_HOST_OPTS $DB | gzip > $SRC_FILE
