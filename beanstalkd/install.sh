@@ -3,7 +3,7 @@
 # exit if a command fails
 set -eo pipefail
 
-version="1.11"
+version="1.13"
 
 # install curl (needed to install rust)
 apt-get update && apt-get install -y curl build-essential
