@@ -65,13 +65,13 @@ fi
 if [ "${POSTGRES_BACKUP_ALL}" == "true" ]; then
   SRC_FILE=dump.sql.gz
   DEST_FILE=all_$(date +"%Y-%m-%dT%H:%M:%SZ").sql.gz
-  
+
   if [ "${S3_FILE_NAME}" != "**None**" ]; then
     DEST_FILE=${S3_FILE_NAME}.sql.gz
   fi
 
   echo "Creating dump of all databases from ${POSTGRES_HOST}..."
-  pg_dumpall -h $POSTGRES_HOST -p $POSTGRES_PORT -U $POSTGRES_USER | gzip > $SRC_FILE
+  pg_dumpall $POSTGRES_HOST_OPTS | gzip > $SRC_FILE
 
   if [ "${ENCRYPTION_PASSWORD}" != "**None**" ]; then
     echo "Encrypting ${SRC_FILE}"
@@ -90,22 +90,44 @@ if [ "${POSTGRES_BACKUP_ALL}" == "true" ]; then
   echo "SQL backup uploaded successfully"
   rm -rf $SRC_FILE
 else
+  if [ "${POSTGRES_FORMAT}" = "**None**"]; then
+    POSTGRES_FORMAT="p"
+  fi
+
+  case "$POSTGRES_FORMAT" in
+      (p|c|t) ;;
+      (d) echo "Directory format not supported, only single-file formats are supported: p, c, t" >&2; exit 1 ;;
+      (*) echo "Unknown pg_dump format '$POSTGRES_FORMAT'. Please use one within: p, c, d, t" >&2; exit 1 ;;
+  esac
+
+  POSTGRES_HOST_OPTS+=" -F${POSTGRES_FORMAT}"
+
+  FILE_EXT="sql.gz"
+  case "$POSTGRES_FORMAT" in
+      (c) FILE_EXT="dump";;
+      (t) FILE_EXT="tar";;
+  esac
+
   OIFS="$IFS"
   IFS=','
   for DB in $POSTGRES_DATABASE
   do
     IFS="$OIFS"
 
-    SRC_FILE=dump.sql.gz
-    DEST_FILE=${DB}_$(date +"%Y-%m-%dT%H:%M:%SZ").sql.gz
+    SRC_FILE="dump.${FILE_EXT}"
+    DEST_FILE="${DB}_$(date +"%Y-%m-%dT%H:%M:%SZ").${FILE_EXT}"
 
     if [ "${S3_FILE_NAME}" != "**None**" ]; then
-      DEST_FILE=${S3_FILE_NAME}_${DB}.sql.gz
+      DEST_FILE="${S3_FILE_NAME}_${DB}.${FILE_EXT}"
     fi
-    
+
     echo "Creating dump of ${DB} database from ${POSTGRES_HOST}..."
-    pg_dump $POSTGRES_HOST_OPTS $DB | gzip > $SRC_FILE
-    
+    if [ "$POSTGRES_FORMAT" = "p" ]; then
+      pg_dump $POSTGRES_HOST_OPTS $DB | gzip > ${SRC_FILE}
+    else
+      pg_dump $POSTGRES_HOST_OPTS $DB > ${SRC_FILE}
+    fi
+
     if [ "${ENCRYPTION_PASSWORD}" != "**None**" ]; then
       echo "Encrypting ${SRC_FILE}"
       openssl enc -aes-256-cbc -in $SRC_FILE -out ${SRC_FILE}.enc -k $ENCRYPTION_PASSWORD
