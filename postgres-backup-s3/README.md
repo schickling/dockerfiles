@@ -36,6 +36,7 @@ pgbackups3:
     POSTGRES_USER: user
     POSTGRES_PASSWORD: password
     POSTGRES_EXTRA_OPTS: '--schema=public --blobs'
+    POSTGRES_FORMAT: 'c'
 ```
 
 ### Automatic Periodic Backups
@@ -45,9 +46,9 @@ You can additionally set the `SCHEDULE` environment variable like `-e SCHEDULE="
 More information about the scheduling can be found [here](http://godoc.org/github.com/robfig/cron#hdr-Predefined_schedules).
 
 ### Backup File Name / Path
-By default, if `POSTGRES_BACKUP_ALL` is true, the dump file will be put at `<S3_PREFIX=''>/all_<timestamp>.sql.gz`. When using `POSTGRES_DATABASE`, each database listed will be backed up to the object path `<S3_PREFIX=''>/<database>_<timestamp>.sql.gz`.
+By default, if `POSTGRES_BACKUP_ALL` is true, the dump file will be put at `<S3_PREFIX=''>/all_<timestamp>.sql.gz`. When using `POSTGRES_DATABASE`, each database listed will be backed up to the object path `<S3_PREFIX=''>/<database>_<timestamp>.<extension>`.
 
-If you wish to make these filenames static, you can use the `S3_FILE_NAME` variable, which will change these formats to `<S3_PREFIX=''>/<S3_FILE_NAME>.sql.gz` or `<S3_PREFIX=''>/<S3_FILE_NAME>_<database>.sql.gz` accordingly.
+If you wish to make these filenames static, you can use the `S3_FILE_NAME` variable, which will change these formats to `<S3_PREFIX=''>/<S3_FILE_NAME>.<extension>` or `<S3_PREFIX=''>/<S3_FILE_NAME>_<database>.<extension>` accordingly.
 
 ### Backup All Databases
 
