@@ -1,4 +1,4 @@
-FROM webdevops/go-crond:main-alpine
+FROM alpine:3.20
 LABEL maintainer="Johannes Schickling <schickling.j@gmail.com>"
 
 ADD install.sh install.sh
